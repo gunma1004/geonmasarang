@@ -160,20 +160,24 @@ export default async function DistrictPage({ params }: PageProps) {
           </div>
 
           {/* 해당 구에 속한 모든 세부 동 목록 한눈에 보기 */}
-          {dongs.length > 0 && (
-            <div className="bg-gradient-to-b from-[#18181b] to-[#0f0f11] border-2 border-amber-500/40 p-6 rounded-3xl max-w-xl mx-auto mb-14 shadow-[0_10px_30px_rgba(0,0,0,0.8)] text-left relative overflow-hidden">
-              <h2 className="text-xs text-amber-400 font-black uppercase tracking-wider mb-3">
-                ✨ {districtName} 세부 동 및 서비스 가능 지역
-              </h2>
-              <div className="flex flex-wrap gap-2">
-                {dongs.map((dong, idx) => (
-                  <span key={idx} className="bg-black/70 text-gray-200 text-xs font-bold px-3.5 py-2 rounded-xl border border-amber-500/20 shadow-inner">
-                    {dong}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
+ {dongs.length > 0 && (
+  <div className="bg-gradient-to-b from-[#18181b] to-[#0f0f11] border-2 border-amber-500/40 p-6 rounded-3xl max-w-xl mx-auto mb-14 shadow-xl text-left">
+    <h2 className="text-xs text-amber-400 font-black uppercase tracking-wider mb-3">
+      ✨ {districtName} 세부 동 선택 (클릭시 개별 페이지 이동)
+    </h2>
+    <div className="flex flex-wrap gap-2">
+      {dongs.map((dong, idx) => (
+        <Link 
+          key={idx} 
+          href={`/${region}/${district}/${dong}`}
+          className="bg-black/70 hover:bg-amber-500 hover:text-black text-gray-200 text-xs font-bold px-3.5 py-2 rounded-xl border border-amber-500/25 transition-all"
+        >
+          {dong}
+        </Link>
+      ))}
+    </div>
+  </div>
+)}
         </section>
 
         {/* 메인과 똑같은 제휴 업체 카드 리스트 */}
