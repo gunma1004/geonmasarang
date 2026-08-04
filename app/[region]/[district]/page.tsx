@@ -1,4 +1,4 @@
-import { regionData } from "../../../data/regions";
+import { regionData } from "../../data/regions";
 import Link from "next/link";
 
 interface PageProps {
