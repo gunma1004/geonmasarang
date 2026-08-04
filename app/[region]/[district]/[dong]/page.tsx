@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: PageProps) {
 const shops = [
   {
     id: 1,
-    name: "🔥 [긴급] 24시 프리미엄 홈케어",
+    name: "🔥 [긴급] 24시 미녀 홈타이",
     location: "서울·경기 전지역 (실시간 신속 방문)",
     desc: "⭐ 만족도 1위! 지친 일상을 깨우는 정성 가득한 테라피 & 릴렉싱 프로그램",
     phone: "0507-1280-3126",
@@ -42,7 +42,7 @@ const shops = [
   },
   {
     id: 2,
-    name: "✨ 달달한 100% 한국인 전문 케어",
+    name: "✨ 달달한국인홈케어",
     location: "서울·경기 전지역",
     desc: "🏆 품격 있는 힐링을 선사하는 프라이빗 방문 테라피 서비스",
     phone: "0507-1280-3172",
@@ -56,7 +56,7 @@ const shops = [
   },
   {
     id: 3,
-    name: "💎 명품 프리미엄 테라피",
+    name: "💎 혼혈스웨디시 테라피",
     location: "서울·경기 전지역",
     desc: "⚡ 칼배송보다 빠른 방문! 철저한 위생 관리와 럭셔리 케어",
     phone: "0507-1280-3128",
@@ -70,10 +70,10 @@ const shops = [
   },
   {
     id: 4,
-    name: "🌟 베테랑 힐링 홈케어",
+    name: "🌟 젊고마인드좋은홈타이",
     location: "서울·경기 전지역",
     desc: "💯 전문 힐러들의 맞춤형 피로 회복 프로그램 진행 중",
-    phone: "0507-1280-3327",
+    phone: "0507-1280-3174",
     badge: "신규 제휴할인",
     badgeColor: "bg-blue-600 text-white",
     image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=800&q=80",
@@ -84,7 +84,7 @@ const shops = [
   },
   {
     id: 5,
-    name: "👑 시그니처 방문 케어",
+    name: "👑 어린마인드홈타이",
     location: "서울·경기 전지역",
     desc: "🚀 후불제 안심 이용! 수도권 전지역 평균 25분 내 칼같이 도착",
     phone: "0507-1280-3170",
