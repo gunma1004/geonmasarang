@@ -17,8 +17,8 @@ export async function generateMetadata({ params }: PageProps) {
   const districtName = regionInfo?.districts[district]?.name || "상세 지역";
   const regionName = regionInfo?.name || "수도권";
 
-  const title = `수도권건마사랑 - ${regionName} ${districtName} 마사지 홈타이 추천 제휴업체`;
-  const description = `${regionName} ${districtName} 전지역 25분 내 신속 방문! 24시 연중무휴 후불제 안심 마사지 및 홈케어 제휴업체 실시간 안내.`;
+  const title = `수도권건마사랑 - ${regionName} ${districtName} 출장마사지 홈타이 추천 제휴업체`;
+  const description = `${regionName} ${districtName} 전지역 25분 내 신속 방문 출장마사지! 24시 연중무휴 후불제 안심 홈타이 및 마사지 제휴업체 실시간 안내.`;
 
   return { title, description };
 }
@@ -104,6 +104,7 @@ export default async function DistrictPage({ params }: PageProps) {
   const regionInfo = regionData[region];
   const districtObj = regionInfo?.districts[district];
   const districtName = districtObj?.name || district;
+  const regionName = regionInfo?.name || "수도권";
   const dongs = districtObj?.dongs || [];
 
   return (
@@ -160,27 +161,27 @@ export default async function DistrictPage({ params }: PageProps) {
           </div>
 
           {/* 해당 구에 속한 모든 세부 동 목록 한눈에 보기 */}
- {dongs.length > 0 && (
-  <div className="bg-gradient-to-b from-[#18181b] to-[#0f0f11] border-2 border-amber-500/40 p-6 rounded-3xl max-w-xl mx-auto mb-14 shadow-xl text-left">
-    <h2 className="text-xs text-amber-400 font-black uppercase tracking-wider mb-3">
-      ✨ {districtName} 세부 동 선택 (클릭시 개별 페이지 이동)
-    </h2>
-    <div className="flex flex-wrap gap-2">
-      {dongs.map((dong, idx) => (
-        <Link 
-          key={idx} 
-          href={`/${region}/${district}/${dong}`}
-          className="bg-black/70 hover:bg-amber-500 hover:text-black text-gray-200 text-xs font-bold px-3.5 py-2 rounded-xl border border-amber-500/25 transition-all"
-        >
-          {dong}
-        </Link>
-      ))}
-    </div>
-  </div>
-)}
+          {dongs.length > 0 && (
+            <div className="bg-gradient-to-b from-[#18181b] to-[#0f0f11] border-2 border-amber-500/40 p-6 rounded-3xl max-w-xl mx-auto mb-14 shadow-xl text-left">
+              <h2 className="text-xs text-amber-400 font-black uppercase tracking-wider mb-3">
+                ✨ {districtName} 세부 동 선택 (클릭시 개별 페이지 이동)
+              </h2>
+              <div className="flex flex-wrap gap-2">
+                {dongs.map((dong, idx) => (
+                  <Link 
+                    key={idx} 
+                    href={`/${region}/${district}/${dong}`}
+                    className="bg-black/70 hover:bg-amber-500 hover:text-black text-gray-200 text-xs font-bold px-3.5 py-2 rounded-xl border border-amber-500/25 transition-all"
+                  >
+                    {dong}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
         </section>
 
-        {/* 메인과 똑같은 제휴 업체 카드 리스트 */}
+        {/* 제휴 업체 카드 리스트 */}
         <section className="space-y-6">
           <div className="flex justify-between items-end mb-4 px-2">
             <div>
@@ -261,6 +262,14 @@ export default async function DistrictPage({ params }: PageProps) {
         </section>
 
       </main>
+
+      {/* 지역 맞춤형 키워드 스태핑 및 히든 텍스트 영역 */}
+      <div className="hidden">
+        {regionName} {districtName} 전지역 24시 홈타이, 스웨디시, 아로마, 타이마사지, 출장마사지, 힐링테라피 제휴업체 할인 정보 안내. {dongs.join(", ")} 등 {districtName} 전역 실시간 25분 방문 보장 후불제 안심 마사지.
+      </div>
+      <div className="text-[1px] text-[#050505] select-none pointer-events-none">
+        {districtName}스웨디시, {districtName}홈타이, {districtName}출장안마, {districtName}마사지추천, {regionName} {districtName} 24시간 실시간 예약 센터 운영 중.
+      </div>
 
       <footer className="bg-[#030303] border-t border-white/10 py-10 text-center text-gray-500 text-xs mt-auto">
         <div className="max-w-4xl mx-auto px-4 space-y-3">

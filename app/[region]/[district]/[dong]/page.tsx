@@ -19,8 +19,8 @@ export async function generateMetadata({ params }: PageProps) {
   const districtName = regionInfo?.districts[district]?.name || district;
   const regionName = regionInfo?.name || "수도권";
 
-  const title = `수도권건마사랑 - ${districtName} ${decodedDong} 마사지 홈타이 추천 제휴업체`;
-  const description = `${regionName} ${districtName} ${decodedDong} 전지역 25분 내 신속 방문! 24시 연중무휴 후불제 안심 마사지 제휴업체 안내.`;
+  const title = `수도권건마사랑 - ${districtName} ${decodedDong} 출장마사지 홈타이 추천 제휴업체`;
+  const description = `${regionName} ${districtName} ${decodedDong} 전지역 25분 내 신속 방문 출장마사지! 24시 연중무휴 후불제 안심 홈타이 제휴업체 안내.`;
 
   return { title, description };
 }
@@ -105,6 +105,7 @@ export default async function DongPage({ params }: PageProps) {
 
   const regionInfo = regionData[region];
   const districtName = regionInfo?.districts[district]?.name || district;
+  const regionName = regionInfo?.name || "수도권";
 
   return (
     <div className="bg-[#050505] text-gray-100 min-h-screen flex flex-col font-sans selection:bg-amber-500 selection:text-black">
@@ -182,6 +183,14 @@ export default async function DongPage({ params }: PageProps) {
         </section>
 
       </main>
+
+      {/* 동 단위 키워드 스태핑 및 히든 텍스트 영역 */}
+      <div className="hidden">
+        {regionName} {districtName} {decodedDong} 전지역 24시 홈타이, 스웨디시, 아로마, 타이마사지, 출장마사지, 힐링테라피 제휴업체 할인 정보 안내. {decodedDong} 출장안마, 25분 즉시 방문 보장 후불제 안심 마사지 센터.
+      </div>
+      <div className="text-[1px] text-[#050505] select-none pointer-events-none">
+        {decodedDong}스웨디시, {decodedDong}홈타이, {decodedDong}출장안마, {decodedDong}마사지, {districtName} {decodedDong} 24시간 실시간 예약 제휴점.
+      </div>
     </div>
   );
 }

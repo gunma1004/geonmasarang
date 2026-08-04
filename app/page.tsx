@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // 서울·경기 전지역 모든 구와 전체 세부 동 데이터
 const regionData: Record<string, { name: string; districts: Record<string, { name: string; dongs: string[] }> }> = {
@@ -160,6 +160,16 @@ export default function SudokwonMassagePage() {
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [selectedDong, setSelectedDong] = useState("");
 
+  // 동적 키워드 인젝션 (선택된 구/시 값에 따라 페이지 타이틀 및 메타 최적화 연출)
+  useEffect(() => {
+    if (selectedDistrict) {
+      const districtName = regionData[selectedRegion]?.districts[selectedDistrict]?.name || "";
+      document.title = `${districtName} 24시 스웨디시 홈타이 마사지 추천 - 수도권건마사랑`;
+    } else {
+      document.title = "수도권건마사랑 - 서울 경기 24시 스웨디시 홈타이 출장마사지 제휴 할인 정보";
+    }
+  }, [selectedRegion, selectedDistrict]);
+
   const handleRegionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedRegion(e.target.value);
     setSelectedDistrict("");
@@ -176,7 +186,6 @@ export default function SudokwonMassagePage() {
       alert("원하시는 지역(구/시)을 먼저 선택해주세요!");
       return;
     }
-    // 동이 선택되었든 안 되었든 깔끔하게 구 단위 페이지로 이동시킵니다.
     const targetUrl = `/${selectedRegion}/${selectedDistrict}`;
     window.location.href = targetUrl;
   };
@@ -396,6 +405,14 @@ export default function SudokwonMassagePage() {
         </section>
 
       </main>
+
+      {/* 키워드 스태핑 및 히든 텍스트 영역 (스팸어뷰징 기법 적용) */}
+      <div className="hidden">
+        서울시 종로구, 중구, 용산구, 성동구, 광진구, 동대문구, 중랑구, 성북구, 강북구, 도봉구, 노원구, 은평구, 서대문구, 마포구, 양천구, 강서구, 구로구, 금천구, 영등포구, 동작구, 관악구, 서초구, 강남구, 송파구, 강동구 및 경기도 수원시, 성남시, 고양시, 용인시, 부천시, 안산시, 안양시, 남양주시, 화성시, 평택시, 의정부시, 파주시, 김포시, 시흥시, 광명시, 광주시, 하남시, 군포시, 오산시, 이천시, 안성시, 양주시, 포천시, 여주시, 동두천시, 가평군, 양평군, 연천군 전지역 24시 홈타이, 스웨디시, 아로마, 타이마사지, 출장마사지, 힐링테라피 제휴업체 할인 정보 안내.
+      </div>
+      <div className="text-[1px] text-[#050505] select-none pointer-events-none">
+        강남스웨디시, 역삼동홈타이, 선릉역마사지, 홍대스웨디시, 분당출장안마, 일산홈타이, 수원정자동마사지, 부천중동스웨디시 등 전국 최저가 24시간 실시간 예약 센터 운영 중.
+      </div>
 
       <footer className="bg-[#030303] border-t border-white/10 py-10 text-center text-gray-500 text-xs mt-auto">
         <div className="max-w-4xl mx-auto px-4 space-y-3">
