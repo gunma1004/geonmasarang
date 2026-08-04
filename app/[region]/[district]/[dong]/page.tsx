@@ -1,29 +1,31 @@
-import { regionData } from "../../../data/regions";
+import { regionData } from "../../../../data/regions";
 import Link from "next/link";
 
 interface PageProps {
   params: Promise<{
     region: string;
     district: string;
+    dong: string;
   }>;
 }
 
-// 구 단위 동적 SEO 메타 태그 생성
+// 각 동별 동적 SEO 메타 태그 생성
 export async function generateMetadata({ params }: PageProps) {
   const resolvedParams = await params;
-  const { region, district } = resolvedParams;
+  const { region, district, dong } = resolvedParams;
+  const decodedDong = decodeURIComponent(dong);
 
   const regionInfo = regionData[region];
   const districtName = regionInfo?.districts[district]?.name || "상세 지역";
   const regionName = regionInfo?.name || "수도권";
 
-  const title = `수도권건마사랑 - ${regionName} ${districtName} 마사지 홈타이 추천 제휴업체`;
-  const description = `${regionName} ${districtName} 전지역 25분 내 신속 방문! 24시 연중무휴 후불제 안심 마사지 및 홈케어 제휴업체 실시간 안내.`;
+  const title = `수도권건마사랑 - ${districtName} ${decodedDong} 마사지 홈타이 추천 제휴업체`;
+  const description = `${regionName} ${districtName} ${decodedDong} 전지역 25분 내 신속 방문! 24시 연중무휴 후불제 안심 마사지 제휴업체 실시간 안내.`;
 
   return { title, description };
 }
 
-// 메인과 동일한 실시간 제휴 업체 데이터
+// 메인과 동일한 제휴 업체 데이터
 const shops = [
   {
     id: 1,
@@ -97,14 +99,14 @@ const shops = [
   }
 ];
 
-export default async function DistrictPage({ params }: PageProps) {
+export default async function DongPage({ params }: PageProps) {
   const resolvedParams = await params;
-  const { region, district } = resolvedParams;
+  const { region, district, dong } = resolvedParams;
+  const decodedDong = decodeURIComponent(dong);
 
   const regionInfo = regionData[region];
   const districtObj = regionInfo?.districts[district];
   const districtName = districtObj?.name || district;
-  const dongs = districtObj?.dongs || [];
 
   return (
     <div className="bg-[#050505] text-gray-100 min-h-screen flex flex-col font-sans selection:bg-amber-500 selection:text-black">
@@ -126,15 +128,15 @@ export default async function DistrictPage({ params }: PageProps) {
             </div>
           </Link>
           
-          <Link href="/" className="text-xs px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 text-black font-extrabold shadow-lg hover:brightness-110 transition-all">
-            🏠 메인으로 가기
+          <Link href={`/${region}/${district}`} className="text-xs px-4 py-2 rounded-xl bg-neutral-800 text-amber-400 font-extrabold border border-amber-500/30 hover:bg-neutral-700 transition-all">
+            ← {districtName} 전체 목록으로
           </Link>
         </div>
       </header>
 
       <main className="max-w-4xl mx-auto px-4 py-8 w-full flex-1">
         
-        {/* 구 맞춤 비주얼 배너 */}
+        {/* 동 맞춤 비주얼 배너 */}
         <section className="text-center my-2">
           <div className="mb-8 overflow-hidden rounded-3xl border border-amber-500/30 shadow-[0_0_40px_rgba(245,158,11,0.15)] relative h-60 md:h-80 flex items-center justify-center p-6">
             <div className="absolute inset-0 z-0">
@@ -148,32 +150,16 @@ export default async function DistrictPage({ params }: PageProps) {
             
             <div className="relative z-10 space-y-3">
               <span className="inline-block px-4 py-1 rounded-full bg-amber-500 text-black font-extrabold text-xs tracking-widest shadow-lg">
-                📍 {districtName} 전지역 실시간 맞춤 매칭
+                📍 {districtName} {decodedDong} 실시간 맞춤 매칭
               </span>
               <h1 className="text-3xl md:text-5xl font-black text-white tracking-tight drop-shadow-lg">
-                <span className="bg-gradient-to-r from-amber-300 to-amber-500 bg-clip-text text-transparent">{districtName}</span> 25분 내 신속 방문 케어
+                <span className="bg-gradient-to-r from-amber-300 to-amber-500 bg-clip-text text-transparent">{decodedDong}</span> 25분 내 신속 방문 케어
               </h1>
               <p className="text-gray-200 text-xs md:text-sm font-medium max-w-lg mx-auto drop-shadow">
-                {districtName} 전지역 24시 연중무휴 후불제 안심 케어 서비스 제휴업체 안내입니다.
+                {districtName} {decodedDong} 전지역 24시 연중무휴 후불제 안심 케어 서비스 제휴업체 안내입니다.
               </p>
             </div>
           </div>
-
-          {/* 세부 동 바로가기 태그 박스 */}
-          {dongs.length > 0 && (
-            <div className="bg-gradient-to-b from-[#18181b] to-[#0f0f11] border-2 border-amber-500/40 p-6 rounded-3xl max-w-xl mx-auto mb-14 shadow-[0_10px_30px_rgba(0,0,0,0.8)] text-left relative overflow-hidden">
-              <h2 className="text-xs text-amber-400 font-black uppercase tracking-wider mb-3">
-                ✨ {districtName} 세부 동 서비스 지역
-              </h2>
-              <div className="flex flex-wrap gap-2">
-                {dongs.map((dong, idx) => (
-                  <span key={idx} className="bg-black/70 text-gray-200 text-xs font-bold px-3 py-1.5 rounded-xl border border-amber-500/20 shadow-inner">
-                    {dong}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
         </section>
 
         {/* 메인과 똑같은 제휴 업체 카드 리스트 */}
@@ -181,9 +167,9 @@ export default async function DistrictPage({ params }: PageProps) {
           <div className="flex justify-between items-end mb-4 px-2">
             <div>
               <h2 className="text-xl md:text-2xl font-black text-white flex items-center gap-2">
-                <span>🔥</span> {districtName} 실시간 추천 제휴업체
+                <span>🔥</span> {districtName} {decodedDong} 추천 제휴업체
               </h2>
-              <p className="text-xs text-gray-400 mt-1">{districtName} 전지역 즉시 방문 가능한 검증된 프리미엄 샵입니다.</p>
+              <p className="text-xs text-gray-400 mt-1">{decodedDong} 인근 대기 중인 검증된 프리미엄 제휴 샵입니다.</p>
             </div>
           </div>
 
@@ -208,7 +194,7 @@ export default async function DistrictPage({ params }: PageProps) {
               <div className="p-6 md:p-7 -mt-6 relative z-10">
                 <div className="mb-2">
                   <span className="text-xs text-amber-400/90 font-bold bg-amber-500/10 px-2.5 py-1 rounded-lg border border-amber-500/20 inline-block mb-2">
-                    📍 {districtName} 및 {shop.location}
+                    📍 {districtName} {decodedDong} 인근 신속 방문
                   </span>
                 </div>
 
@@ -244,7 +230,7 @@ export default async function DistrictPage({ params }: PageProps) {
                     <span className="text-base">📞</span> 전화로 즉시예약
                   </a>
                   <a 
-                    href={`sms:${shop.phone}?body=${encodeURIComponent(`${districtName} ${shop.name} 문의드립니다. (수도권건마사랑 보고 연락드렸어요)`)}`} 
+                    href={`sms:${shop.phone}?body=${encodeURIComponent(`${districtName} ${decodedDong} ${shop.name} 문의드립니다. (수도권건마사랑 보고 연락드렸어요)`)}`} 
                     className="flex items-center justify-center gap-2 bg-neutral-900 hover:bg-neutral-800 text-white font-black py-4 rounded-2xl text-xs md:text-sm border border-white/10 transition-all hover:border-amber-500/40 transform active:scale-95 shadow-md"
                   >
                     <span className="text-base">💬</span> 간편 문자상담
