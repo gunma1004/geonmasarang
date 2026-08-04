@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: PageProps) {
   const decodedDong = decodeURIComponent(dong);
 
   const regionInfo = regionData[region];
-  const districtName = regionInfo?.districts[district]?.name || "상세 지역";
+  const districtName = regionInfo?.districts[district]?.name || district;
   const regionName = regionInfo?.name || "수도권";
 
   const title = `수도권건마사랑 - ${districtName} ${decodedDong} 마사지 홈타이 추천 제휴업체`;
@@ -163,7 +163,7 @@ export default async function DongPage({ params }: PageProps) {
 
               <div className="p-6">
                 <span className="text-xs text-amber-400 font-bold bg-amber-500/10 px-2.5 py-1 rounded-lg border border-amber-500/20 inline-block mb-2">
-                  📍 {decodedDong} 인근 대기 및 신속 방문
+                  📍 {districtName} {decodedDong} 인근 신속 방문
                 </span>
                 <h3 className="text-xl font-black text-white mb-2">{shop.name}</h3>
                 <p className="text-xs text-gray-300 mb-4 bg-black/40 p-3 rounded-xl">{shop.desc}</p>
@@ -172,7 +172,7 @@ export default async function DongPage({ params }: PageProps) {
                   <a href={`tel:${shop.phone}`} className="flex items-center justify-center gap-2 bg-amber-500 text-black font-black py-4 rounded-2xl text-xs">
                     📞 전화예약
                   </a>
-                  <a href={`sms:${shop.phone}?body=${encodeURIComponent(`${decodedDong} ${shop.name} 문의`)}`} className="flex items-center justify-center gap-2 bg-neutral-900 text-white font-black py-4 rounded-2xl text-xs border border-white/10">
+                  <a href={`sms:${shop.phone}?body=${encodeURIComponent(`${districtName} ${decodedDong} ${shop.name} 문의`)}`} className="flex items-center justify-center gap-2 bg-neutral-900 text-white font-black py-4 rounded-2xl text-xs border border-white/10">
                     💬 문자상담
                   </a>
                 </div>
