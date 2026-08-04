@@ -176,7 +176,8 @@ export default function SudokwonMassagePage() {
       alert("원하시는 지역(구/시)을 먼저 선택해주세요!");
       return;
     }
-    const targetUrl = `/${selectedRegion}/${selectedDistrict}${selectedDong ? `/${selectedDong}` : ""}`;
+    // 동이 선택되었든 안 되었든 깔끔하게 구 단위 페이지로 이동시킵니다.
+    const targetUrl = `/${selectedRegion}/${selectedDistrict}`;
     window.location.href = targetUrl;
   };
 

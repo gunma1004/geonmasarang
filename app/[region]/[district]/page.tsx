@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: PageProps) {
   return { title, description };
 }
 
-// 메인과 동일한 실시간 제휴 업체 데이터
+// 메인과 동일한 제휴 업체 데이터
 const shops = [
   {
     id: 1,
@@ -159,15 +159,15 @@ export default async function DistrictPage({ params }: PageProps) {
             </div>
           </div>
 
-          {/* 세부 동 바로가기 태그 박스 */}
+          {/* 해당 구에 속한 모든 세부 동 목록 한눈에 보기 */}
           {dongs.length > 0 && (
             <div className="bg-gradient-to-b from-[#18181b] to-[#0f0f11] border-2 border-amber-500/40 p-6 rounded-3xl max-w-xl mx-auto mb-14 shadow-[0_10px_30px_rgba(0,0,0,0.8)] text-left relative overflow-hidden">
               <h2 className="text-xs text-amber-400 font-black uppercase tracking-wider mb-3">
-                ✨ {districtName} 세부 동 서비스 지역
+                ✨ {districtName} 세부 동 및 서비스 가능 지역
               </h2>
               <div className="flex flex-wrap gap-2">
                 {dongs.map((dong, idx) => (
-                  <span key={idx} className="bg-black/70 text-gray-200 text-xs font-bold px-3 py-1.5 rounded-xl border border-amber-500/20 shadow-inner">
+                  <span key={idx} className="bg-black/70 text-gray-200 text-xs font-bold px-3.5 py-2 rounded-xl border border-amber-500/20 shadow-inner">
                     {dong}
                   </span>
                 ))}
@@ -181,7 +181,7 @@ export default async function DistrictPage({ params }: PageProps) {
           <div className="flex justify-between items-end mb-4 px-2">
             <div>
               <h2 className="text-xl md:text-2xl font-black text-white flex items-center gap-2">
-                <span>🔥</span> {districtName} 실시간 추천 제휴업체
+                <span>🔥</span> {districtName} 추천 제휴업체 리스트
               </h2>
               <p className="text-xs text-gray-400 mt-1">{districtName} 전지역 즉시 방문 가능한 검증된 프리미엄 샵입니다.</p>
             </div>
@@ -208,7 +208,7 @@ export default async function DistrictPage({ params }: PageProps) {
               <div className="p-6 md:p-7 -mt-6 relative z-10">
                 <div className="mb-2">
                   <span className="text-xs text-amber-400/90 font-bold bg-amber-500/10 px-2.5 py-1 rounded-lg border border-amber-500/20 inline-block mb-2">
-                    📍 {districtName} 및 {shop.location}
+                    📍 {districtName} 전지역 신속 방문
                   </span>
                 </div>
 
