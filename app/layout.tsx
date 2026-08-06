@@ -1,4 +1,5 @@
-// app/layout.tsx
+// 📍 app/layout.tsx
+import "./globals.css"; // 👈 이 줄이 반드시 맨 위에 들어있어야 합니다!
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
