@@ -1,28 +1,22 @@
+// app/layout.tsx
 import type { Metadata } from "next";
-import "./globals.css";
 
-// ⬇️ 여기에 메타 태그 인증 정보를 추가합니다.
 export const metadata: Metadata = {
   title: "수도권건마사랑 - 서울 경기 24시 스웨디시 홈타이 출장마사지 제휴 할인 정보",
-  description: "서울·경기 전지역 25분 내 신속 방문 출장마사지 및 홈타이 제휴업체 실시간 안내",
-  verification: {
-    google: "TCu3tK7Qc_120-isV31Dkmt4FXwgCjqGfI2PUkF3lA4",
-    other: {
-      "naver-site-verification": "fdba1e09333adec72e19fc16a6b0625d9aca5a2d",
-    },
+  description: "서울 및 경기도 전지역 25분 내 신속 방문 출장마사지! 24시 연중무휴 후불제 안심 홈타이, 스웨디시 제휴업체 정보 안내.",
+  openGraph: {
+    title: "수도권건마사랑 - 서울 경기 24시 스웨디시 홈타이 출장마사지 제휴 할인 정보",
+    description: "서울 및 경기도 전지역 25분 내 신속 방문 출장마사지! 24시 연중무휴 후불제 안심 홈타이, 스웨디시 제휴업체 정보 안내.",
+    siteName: "수도권건마사랑",
+    type: "website",
+    images: ["/logo.png"],
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
-      <body className="antialiased">
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
