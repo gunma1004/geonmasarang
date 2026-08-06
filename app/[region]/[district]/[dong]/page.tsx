@@ -12,7 +12,7 @@ interface PageProps {
   }>;
 }
 
-// 🟢 1. 서버에서 실행되어 네이버 로봇에 OG 태그를 넘겨주는 함수
+// 🟢 1. 서버 메타데이터 생성 (SEO)
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const resolvedParams = await params;
   const { region, district, dong } = resolvedParams;
@@ -22,7 +22,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const districtName = regionInfo?.districts[district]?.name || district;
   const regionName = regionInfo?.name || "수도권";
 
-  // 🎯 [수정된 부분] 키워드를 맨 앞으로, 사이트명을 맨 뒤(- 수도권건마사랑)로 배치
   const title = `${districtName} ${decodedDong} 출장마사지 홈타이 추천 제휴업체 - 수도권건마사랑`;
   const description = `${regionName} ${districtName} ${decodedDong} 전지역 25분 내 신속 방문 출장마사지! 24시 연중무휴 후불제 안심 홈타이 제휴업체 안내.`;
 
@@ -30,7 +29,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title,
     description,
     openGraph: {
-      title, // OG 제목도 동일하게 들어갑니다.
+      title,
       description,
       type: "website",
       siteName: "수도권건마사랑",
@@ -48,7 +47,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-// 🟢 2. 실제 화면을 그려주는 메인 컴포넌트
+// 🟢 2. 실제 화면 컴포넌트
 export default async function DongPage({ params }: PageProps) {
   const resolvedParams = await params;
   const { region, district, dong } = resolvedParams;
@@ -56,6 +55,11 @@ export default async function DongPage({ params }: PageProps) {
 
   const regionInfo = regionData[region];
   const districtName = regionInfo?.districts[district]?.name || district;
+  const regionName = regionInfo?.name || "수도권";
+
+  // 💡 실제 프로젝트의 DB나 데이터 소스에서 동별 업체 목록을 불러오는 로직을 연결하시면 됩니다.
+  // 예시: const shops = await getShopsByDong(region, district, decodedDong);
+  const shops: any[] = []; // 임시 빈 배열
 
   return (
     <div className="bg-[#050505] text-gray-100 min-h-screen flex flex-col font-sans selection:bg-amber-500 selection:text-black">
@@ -72,8 +76,43 @@ export default async function DongPage({ params }: PageProps) {
         </div>
       </header>
 
+      {/* 본문 영역 */}
       <main className="max-w-4xl mx-auto px-4 py-8 w-full flex-1">
-        {/* 본문 레이아웃 UI 들어가면 됩니다 */}
+        {/* 상단 타이틀 섹션 */}
+        <div className="mb-8 border-b border-neutral-800 pb-6">
+          <span className="text-amber-500 font-bold text-sm tracking-wide">
+            {regionName} &gt; {districtName}
+          </span>
+          <h1 className="text-2xl sm:text-3xl font-black text-white mt-1">
+            {districtName} <span className="text-amber-400">{decodedDong}</span> 마사지/홈타이
+          </h1>
+          <p className="text-neutral-400 text-sm mt-2">
+            {districtName} {decodedDong} 엄선된 제휴업체 정보 및 이용 안내입니다.
+          </p>
+        </div>
+
+        {/* 업체 리스트 영역 */}
+        {shops.length > 0 ? (
+          <div className="grid gap-4">
+            {/* 업체 카드가 들어갈 자리 */}
+          </div>
+        ) : (
+          /* 업체가 없을 때 표시할 예외 처리 UI */
+          <div className="text-center py-16 bg-neutral-900/50 rounded-2xl border border-neutral-800">
+            <p className="text-neutral-400 text-lg font-medium">
+              현재 <span className="text-amber-400">{decodedDong}</span>에 등록된 제휴업체가 없습니다.
+            </p>
+            <p className="text-neutral-500 text-sm mt-1">
+              인근 지역의 제휴업체를 확인해 주세요!
+            </p>
+            <Link
+              href={`/${region}/${district}`}
+              className="inline-block mt-6 px-6 py-2.5 bg-amber-500 hover:bg-amber-400 text-black font-extrabold rounded-xl transition-colors text-sm"
+            >
+              {districtName} 전체 목록 보기
+            </Link>
+          </div>
+        )}
       </main>
     </div>
   );
