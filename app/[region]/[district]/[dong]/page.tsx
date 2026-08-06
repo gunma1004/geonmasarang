@@ -22,14 +22,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const districtName = regionInfo?.districts[district]?.name || district;
   const regionName = regionInfo?.name || "수도권";
 
-  const title = `수도권건마사랑 - ${districtName} ${decodedDong} 출장마사지 홈타이 추천 제휴업체`;
+  // 🎯 [수정된 부분] 키워드를 맨 앞으로, 사이트명을 맨 뒤(- 수도권건마사랑)로 배치
+  const title = `${districtName} ${decodedDong} 출장마사지 홈타이 추천 제휴업체 - 수도권건마사랑`;
   const description = `${regionName} ${districtName} ${decodedDong} 전지역 25분 내 신속 방문 출장마사지! 24시 연중무휴 후불제 안심 홈타이 제휴업체 안내.`;
 
   return {
     title,
     description,
     openGraph: {
-      title,
+      title, // OG 제목도 동일하게 들어갑니다.
       description,
       type: "website",
       siteName: "수도권건마사랑",
@@ -47,7 +48,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-// 🟢 2. 실제 화면을 그려주는 메인 컴포넌트 (Props -> PageProps로 수정)
+// 🟢 2. 실제 화면을 그려주는 메인 컴포넌트
 export default async function DongPage({ params }: PageProps) {
   const resolvedParams = await params;
   const { region, district, dong } = resolvedParams;

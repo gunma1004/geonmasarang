@@ -1,5 +1,6 @@
 import { regionData } from "../../data/regions";
 import Link from "next/link";
+import type { Metadata } from "next";
 
 interface PageProps {
   params: Promise<{
@@ -8,8 +9,8 @@ interface PageProps {
   }>;
 }
 
-// 구 단위 동적 SEO 메타 태그 생성
-export async function generateMetadata({ params }: PageProps) {
+// 🟢 1. 구 단위 동적 SEO 메타 태그 생성 (OG 태그 및 키워드 순서 반영)
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const resolvedParams = await params;
   const { region, district } = resolvedParams;
 
@@ -17,10 +18,30 @@ export async function generateMetadata({ params }: PageProps) {
   const districtName = regionInfo?.districts[district]?.name || "상세 지역";
   const regionName = regionInfo?.name || "수도권";
 
-  const title = `수도권건마사랑 - ${regionName} ${districtName} 출장마사지 홈타이 추천 제휴업체`;
+  // 🎯 키워드를 맨 앞으로, 사이트명(- 수도권건마사랑)을 맨 뒤로 배치
+  const title = `${regionName} ${districtName} 출장마사지 홈타이 추천 제휴업체 - 수도권건마사랑`;
   const description = `${regionName} ${districtName} 전지역 25분 내 신속 방문 출장마사지! 24시 연중무휴 후불제 안심 홈타이 및 마사지 제휴업체 실시간 안내.`;
 
-  return { title, description };
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      siteName: "수도권건마사랑",
+      images: [
+        {
+          url: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+  };
 }
 
 // 메인과 동일한 제휴 업체 데이터
@@ -263,13 +284,7 @@ export default async function DistrictPage({ params }: PageProps) {
 
       </main>
 
-      {/* 지역 맞춤형 키워드 스태핑 및 히든 텍스트 영역 */}
-      <div className="hidden">
-        {regionName} {districtName} 전지역 24시 홈타이, 스웨디시, 아로마, 타이마사지, 출장마사지, 힐링테라피 제휴업체 할인 정보 안내. {dongs.join(", ")} 등 {districtName} 전역 실시간 25분 방문 보장 후불제 안심 마사지.
-      </div>
-      <div className="text-[1px] text-[#050505] select-none pointer-events-none">
-        {districtName}스웨디시, {districtName}홈타이, {districtName}출장안마, {districtName}마사지추천, {regionName} {districtName} 24시간 실시간 예약 센터 운영 중.
-      </div>
+      {/* ⚠️ 네이버 어뷰징 방지를 위해 하단 숨김 키워드 영역 완전 제거됨 */}
 
       <footer className="bg-[#030303] border-t border-white/10 py-10 text-center text-gray-500 text-xs mt-auto">
         <div className="max-w-4xl mx-auto px-4 space-y-3">
