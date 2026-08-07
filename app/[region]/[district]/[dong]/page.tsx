@@ -55,7 +55,7 @@ const shops = [
     phone: "0507-1280-3172",
     badge: "실시간 인기폭발",
     badgeColor: "bg-red-500 text-white animate-pulse",
-    image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80",
+    image: "/shop1.jpg",
     courses: [
       { name: "릴렉스 건식 케어 (60분)", price: "60,000원", best: false },
       { name: "프리미엄 스웨디시 (60분)", price: "140,000원", best: true },
@@ -69,7 +69,7 @@ const shops = [
     phone: "0507-1280-3126",
     badge: "만족도 최우수",
     badgeColor: "bg-amber-500 text-black",
-    image: "https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=800&q=80",
+    image: "/shop2.jpg",
     courses: [
       { name: "맞춤형 바디 케어 (60분)", price: "90,000원", best: false },
       { name: "스페셜 아로마 힐링 (60분)", price: "140,000원", best: true },
@@ -83,7 +83,7 @@ const shops = [
     phone: "0507-1280-3174",
     badge: "24시 상시할인",
     badgeColor: "bg-purple-600 text-white",
-    image: "https://images.unsplash.com/photo-1519824145371-296894a0daa9?auto=format&fit=crop&w=800&q=80",
+    image: "/shop3.jpg",
     courses: [
       { name: "타이/아로마 코스 (60분)", price: "60,000원", best: false },
       { name: "한국 스웨디시케어 (60분)", price: "140,000원", best: true },
@@ -97,7 +97,7 @@ const shops = [
     phone: "0507-1280-3128",
     badge: "신규 제휴할인",
     badgeColor: "bg-blue-600 text-white",
-    image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=800&q=80",
+    image: "/shop4.jpg",
     courses: [
       { name: "스탠다드 타이코스 (60분)", price: "60,000원", best: false },
       { name: "VIP 스웨디시 (90분)", price: "140,000원", best: true },
@@ -111,7 +111,7 @@ const shops = [
     phone: "0507-1280-3170",
     badge: "재방문율 99%",
     badgeColor: "bg-emerald-500 text-black",
-    image: "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=800&q=80",
+    image: "/shop5.jpg",
     courses: [
       { name: "릴렉스 타이 코스 (60분)", price: "60,000원", best: false },
       { name: "시그니처 스웨디시 (60분)", price: "140,000원", best: true },
