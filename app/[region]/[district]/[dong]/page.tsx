@@ -1,5 +1,3 @@
-// 📍 app/[region]/[district]/[dong]/page.tsx
-
 import { regionData } from "../../../data/regions";
 import Link from "next/link";
 import type { Metadata } from "next";
@@ -35,7 +33,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       siteName: "수도권건마사랑",
       images: [
         {
-          url: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80",
+          url: "/my-banner.png",
         },
       ],
     },
@@ -159,32 +157,14 @@ export default async function DongPage({ params }: PageProps) {
       </header>
 
       <main className="max-w-4xl mx-auto px-4 py-8 w-full flex-1">
-        {/* 동 맞춤 비주얼 배너 */}
+        {/* 📍 동 맞춤 비주얼 배너 (수정 완료: public/my-banner.png 적용) */}
         <section className="text-center my-2">
-          <div className="mb-8 overflow-hidden rounded-3xl border border-amber-500/30 shadow-[0_0_40px_rgba(245,158,11,0.15)] relative h-60 md:h-80 flex items-center justify-center p-6">
-            <div className="absolute inset-0 z-0">
-              <img
-                src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1600&q=80"
-                alt="지역 맞춤 힐링 배너"
-                className="w-full h-full object-cover filter brightness-[0.35] scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
-            </div>
-
-            <div className="relative z-10 space-y-3">
-              <span className="inline-block px-4 py-1 rounded-full bg-amber-500 text-black font-extrabold text-xs tracking-widest shadow-lg">
-                📍 {districtName} {decodedDong} 실시간 맞춤 매칭
-              </span>
-              <h1 className="text-3xl md:text-5xl font-black text-white tracking-tight drop-shadow-lg">
-                <span className="bg-gradient-to-r from-amber-300 to-amber-500 bg-clip-text text-transparent">
-                  {districtName} {decodedDong}
-                </span>{" "}
-                25분 내 신속 방문 케어
-              </h1>
-              <p className="text-gray-200 text-xs md:text-sm font-medium max-w-lg mx-auto drop-shadow">
-                {districtName} {decodedDong} 전지역 24시 연중무휴 후불제 안심 케어 서비스 제휴업체 안내입니다.
-              </p>
-            </div>
+          <div className="mb-8 overflow-hidden rounded-3xl border border-amber-500/30 shadow-[0_0_40px_rgba(245,158,11,0.15)] relative w-full">
+            <img
+              src="/my-banner.png"
+              alt={`${districtName} ${decodedDong} 메인 배너`}
+              className="w-full h-auto object-cover block"
+            />
           </div>
         </section>
 

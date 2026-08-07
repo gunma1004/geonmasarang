@@ -1,4 +1,3 @@
-// 📍 app/MainClientUI.tsx
 "use client";
 
 import { useState } from "react";
@@ -220,29 +219,14 @@ export default function MainClientUI() {
 
       <main className="max-w-4xl mx-auto px-4 py-8 w-full flex-1">
         
-        {/* 메인 비주얼 배너 */}
+        {/* 📍 메인 비주얼 배너 (수정 완료: public/my-banner.png 적용) */}
         <section className="text-center my-2">
-          <div className="mb-8 overflow-hidden rounded-3xl border border-amber-500/30 shadow-[0_0_40px_rgba(245,158,11,0.15)] relative h-60 md:h-80 flex items-center justify-center p-6">
-            <div className="absolute inset-0 z-0">
-              <img 
-                src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1600&q=80" 
-                alt="메인 힐링 배너" 
-                className="w-full h-full object-cover filter brightness-[0.35] scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
-            </div>
-            
-            <div className="relative z-10 space-y-3">
-              <span className="inline-block px-4 py-1 rounded-full bg-amber-500 text-black font-extrabold text-xs tracking-widest shadow-lg animate-bounce">
-                ✨ 100% 후불제 안심 보장 시스템
-              </span>
-              <h1 className="text-3xl md:text-5xl font-black text-white tracking-tight drop-shadow-lg">
-                서울·경기 전지역 <span className="bg-gradient-to-r from-amber-300 to-amber-500 bg-clip-text text-transparent">25분 내 신속 방문 케어</span>
-              </h1>
-              <p className="text-gray-200 text-xs md:text-sm font-medium max-w-lg mx-auto drop-shadow">
-                엄선된 최고급 베테랑 관리사의 프라이빗 피로회복 프로그램! 지금 바로 내 주변 제휴업체를 만나보세요.
-              </p>
-            </div>
+          <div className="mb-8 overflow-hidden rounded-3xl border border-amber-500/30 shadow-[0_0_40px_rgba(245,158,11,0.15)] relative w-full">
+            <img 
+              src="/my-banner.png" 
+              alt="수도권건마사랑 메인 배너" 
+              className="w-full h-auto object-cover block"
+            />
           </div>
 
           {/* 지역 선택 박스 */}
@@ -398,8 +382,6 @@ export default function MainClientUI() {
         </section>
 
       </main>
-
-      {/* ⚠️ 네이버 저품질 방지를 위해 하단 키워드 스태핑 제거 완료 */}
 
       <footer className="bg-[#030303] border-t border-white/10 py-10 text-center text-gray-500 text-xs mt-auto">
         <div className="max-w-4xl mx-auto px-4 space-y-3">
