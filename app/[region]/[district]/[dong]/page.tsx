@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const districtName = regionInfo?.districts[district]?.name || district;
   const regionName = regionInfo?.name || "수도권";
 
-  const title = `${districtName} ${decodedDong} 출장마사지 홈타이 추천 제휴업체 - 수도권건마사랑`;
+  const title = `${districtName} ${decodedDong} 출장마사지 홈타이 추천 제휴업체 - 수도권 테라피랩`;
   const description = `${regionName} ${districtName} ${decodedDong} 전지역 25분 내 신속 방문 출장마사지! 24시 연중무휴 후불제 안심 홈타이 및 마사지 제휴업체 실시간 안내.`;
 
   return {
@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title,
       description,
       type: "website",
-      siteName: "수도권건마사랑",
+      siteName: "수도권 테라피랩",
       images: [
         {
           url: "/my-banner.png",
@@ -136,12 +136,12 @@ export default async function DongPage({ params }: PageProps) {
           <Link href="/" className="flex items-center gap-3 group">
             <img
               src="/logo.png"
-              alt="수도권건마사랑 로고"
+              alt="수도권 테라피랩 로고"
               className="w-10 h-10 rounded-xl object-cover border border-amber-500/40 shadow-[0_0_12px_rgba(245,158,11,0.4)] group-hover:scale-105 transition-transform"
             />
             <div className="flex flex-col">
               <span className="text-xl font-black tracking-wider bg-gradient-to-r from-amber-300 via-amber-400 to-yellow-500 bg-clip-text text-transparent">
-                수도권건마사랑
+                수도권 테라피랩
               </span>
               <span className="text-[10px] text-gray-400 tracking-tighter">SEOUL & GYEONGGI PREMIUM</span>
             </div>
@@ -248,7 +248,7 @@ export default async function DongPage({ params }: PageProps) {
                   </a>
                   <a
                     href={`sms:${shop.phone}?body=${encodeURIComponent(
-                      `${districtName} ${decodedDong} ${shop.name} 문의드립니다. (수도권건마사랑 보고 연락드렸어요)`
+                      `${districtName} ${decodedDong} ${shop.name} 문의드립니다. (수도권 테라피랩 보고 연락드렸어요)`
                     )}`}
                     className="flex items-center justify-center gap-2 bg-neutral-900 hover:bg-neutral-800 text-white font-black py-4 rounded-2xl text-xs md:text-sm border border-white/10 transition-all hover:border-amber-500/40 transform active:scale-95 shadow-md"
                   >
@@ -263,8 +263,8 @@ export default async function DongPage({ params }: PageProps) {
 
       <footer className="bg-[#030303] border-t border-white/10 py-10 text-center text-gray-500 text-xs mt-auto">
         <div className="max-w-4xl mx-auto px-4 space-y-3">
-          <p className="text-gray-400 font-bold">수도권건마사랑은 건전하고 안전한 제휴 마사지 정보 플랫폼입니다.</p>
-          <p className="text-[11px] text-gray-600">COPYRIGHT &copy; 수도권건마사랑 ALL RIGHTS RESERVED.</p>
+          <p className="text-gray-400 font-bold">수도권 테라피랩은 건전하고 안전한 제휴 마사지 정보 플랫폼입니다.</p>
+          <p className="text-[11px] text-gray-600">COPYRIGHT &copy; 수도권 테라피랩 ALL RIGHTS RESERVED.</p>
         </div>
       </footer>
     </div>

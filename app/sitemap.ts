@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://sudokwon-massage.shop'
+  const baseUrl = 'https://sg-therapylab.shop'
 
   return [
     {
