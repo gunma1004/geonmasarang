@@ -10,7 +10,7 @@ interface PageProps {
   }>;
 }
 
-// 🟢 1. 동 동적 SEO 메타 태그 생성
+// 🟢 1. 동 단위 동적 SEO 메타 태그 생성 (출장마사지 타겟팅 및 중복 방지)
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const resolvedParams = await params;
   const { region, district, dong } = resolvedParams;
@@ -20,8 +20,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const districtName = regionInfo?.districts[district]?.name || district;
   const regionName = regionInfo?.name || "수도권";
 
-  const title = `${districtName} ${decodedDong} 출장마사지 홈타이 추천 제휴업체 - 수도권 테라피랩`;
-  const description = `${regionName} ${districtName} ${decodedDong} 전지역 25분 내 신속 방문 출장마사지! 24시 연중무휴 후불제 안심 홈타이 및 마사지 제휴업체 실시간 안내.`;
+  const title = `${districtName} ${decodedDong} 출장마사지 24시 홈타이 스웨디시 제휴 할인 - 케어콕`;
+  const description = `${regionName} ${districtName} ${decodedDong} 어디서나 25분 내 도착하는 안심 출장마사지! 타이/아로마/스웨디시 제휴 샵 코스 비교 및 24시 후불제 예약 안내.`;
 
   return {
     title,
@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title,
       description,
       type: "website",
-      siteName: "수도권 테라피랩",
+      siteName: "케어콕",
       images: [
         {
           url: "/my-banner.png",
@@ -45,14 +45,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-// 🎯 제휴 업체 데이터 (구 페이지와 동일한 공유 데이터)
+// 제휴 업체 데이터
 const shops = [
   {
     id: 1,
-    name: "🔥 한국미인홈케어",
+    name: "🔥 24시미녀홈타이",
     location: "서울·경기 전지역 (실시간 신속 방문)",
     desc: "⭐ 만족도 1위! 지친 일상을 깨우는 정성 가득한 테라피 & 릴렉싱 프로그램",
-    phone: "0507-1280-3172",
+    phone: "0507-1280-3126",
     badge: "실시간 인기폭발",
     badgeColor: "bg-red-500 text-white animate-pulse",
     image: "/shop1.jpg",
@@ -63,15 +63,15 @@ const shops = [
   },
   {
     id: 2,
-    name: "✨ 24시미녀홈타이",
+    name: "✨달달한국인홈케어",
     location: "서울·경기 전지역",
     desc: "🏆 품격 있는 힐링을 선사하는 프라이빗 방문 테라피 서비스",
-    phone: "0507-1280-3126",
+    phone: "0507-1280-3172",
     badge: "만족도 최우수",
     badgeColor: "bg-amber-500 text-black",
     image: "/shop2.jpg",
     courses: [
-      { name: "맞춤형 바디 케어 (60분)", price: "90,000원", best: false },
+      { name: "아로디시태국 (90분)", price: "100,000원", best: false },
       { name: "스페셜 아로마 힐링 (60분)", price: "140,000원", best: true },
     ],
   },
@@ -105,7 +105,7 @@ const shops = [
   },
   {
     id: 5,
-    name: "👑 어린마인드홈타이",
+    name: "👑 한국골든테라피",
     location: "서울·경기 전지역",
     desc: "🚀 후불제 안심 이용! 수도권 전지역 평균 25분 내 칼같이 도착",
     phone: "0507-1280-3170",
@@ -136,12 +136,12 @@ export default async function DongPage({ params }: PageProps) {
           <Link href="/" className="flex items-center gap-3 group">
             <img
               src="/logo.png"
-              alt="수도권 테라피랩 로고"
+              alt="케어콕 로고"
               className="w-10 h-10 rounded-xl object-cover border border-amber-500/40 shadow-[0_0_12px_rgba(245,158,11,0.4)] group-hover:scale-105 transition-transform"
             />
             <div className="flex flex-col">
               <span className="text-xl font-black tracking-wider bg-gradient-to-r from-amber-300 via-amber-400 to-yellow-500 bg-clip-text text-transparent">
-                수도권 테라피랩
+                케어콕
               </span>
               <span className="text-[10px] text-gray-400 tracking-tighter">SEOUL & GYEONGGI PREMIUM</span>
             </div>
@@ -157,12 +157,12 @@ export default async function DongPage({ params }: PageProps) {
       </header>
 
       <main className="max-w-4xl mx-auto px-4 py-8 w-full flex-1">
-        {/* 📍 동 맞춤 비주얼 배너 (수정 완료: public/my-banner.png 적용) */}
+        {/* 동 맞춤 비주얼 배너 */}
         <section className="text-center my-2">
           <div className="mb-8 overflow-hidden rounded-3xl border border-amber-500/30 shadow-[0_0_40px_rgba(245,158,11,0.15)] relative w-full">
             <img
               src="/my-banner.png"
-              alt={`${districtName} ${decodedDong} 메인 배너`}
+              alt={`${districtName} ${decodedDong} 출장마사지 배너`}
               className="w-full h-auto object-cover block"
             />
           </div>
@@ -172,11 +172,11 @@ export default async function DongPage({ params }: PageProps) {
         <section className="space-y-6">
           <div className="flex justify-between items-end mb-4 px-2">
             <div>
-              <h2 className="text-xl md:text-2xl font-black text-white flex items-center gap-2">
-                <span>🔥</span> {districtName} {decodedDong} 추천 제휴업체 리스트
-              </h2>
+              <h1 className="text-xl md:text-2xl font-black text-white flex items-center gap-2">
+                <span>🔥</span> {districtName} {decodedDong} 출장마사지 추천 제휴업체
+              </h1>
               <p className="text-xs text-gray-400 mt-1">
-                {decodedDong} 전지역 즉시 방문 가능한 검증된 프리미엄 샵입니다.
+                {decodedDong} 전지역 25분 내 즉시 방문 가능한 검증된 프리미엄 홈케어 샵입니다.
               </p>
             </div>
           </div>
@@ -189,7 +189,7 @@ export default async function DongPage({ params }: PageProps) {
               <div className="relative h-48 md:h-56 w-full overflow-hidden">
                 <img
                   src={shop.image}
-                  alt={shop.name}
+                  alt={`${districtName} ${decodedDong} ${shop.name}`}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter brightness-90"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#141416] via-transparent to-black/30"></div>
@@ -204,7 +204,7 @@ export default async function DongPage({ params }: PageProps) {
               <div className="p-6 md:p-7 -mt-6 relative z-10">
                 <div className="mb-2">
                   <span className="text-xs text-amber-400/90 font-bold bg-amber-500/10 px-2.5 py-1 rounded-lg border border-amber-500/20 inline-block mb-2">
-                    📍 {districtName} {decodedDong} 전지역 신속 방문
+                    📍 {districtName} {decodedDong} 전지역 출장 방문
                   </span>
                 </div>
 
@@ -248,7 +248,7 @@ export default async function DongPage({ params }: PageProps) {
                   </a>
                   <a
                     href={`sms:${shop.phone}?body=${encodeURIComponent(
-                      `${districtName} ${decodedDong} ${shop.name} 문의드립니다. (수도권 테라피랩 보고 연락드렸어요)`
+                      `${districtName} ${decodedDong} ${shop.name} 출장 문의드립니다. (케어콕 보고 연락드렸어요)`
                     )}`}
                     className="flex items-center justify-center gap-2 bg-neutral-900 hover:bg-neutral-800 text-white font-black py-4 rounded-2xl text-xs md:text-sm border border-white/10 transition-all hover:border-amber-500/40 transform active:scale-95 shadow-md"
                   >
@@ -263,8 +263,8 @@ export default async function DongPage({ params }: PageProps) {
 
       <footer className="bg-[#030303] border-t border-white/10 py-10 text-center text-gray-500 text-xs mt-auto">
         <div className="max-w-4xl mx-auto px-4 space-y-3">
-          <p className="text-gray-400 font-bold">수도권 테라피랩은 건전하고 안전한 제휴 마사지 정보 플랫폼입니다.</p>
-          <p className="text-[11px] text-gray-600">COPYRIGHT &copy; 수도권 테라피랩 ALL RIGHTS RESERVED.</p>
+          <p className="text-gray-400 font-bold">케어콕은 건전하고 안전한 제휴 마사지 정보 플랫폼입니다.</p>
+          <p className="text-[11px] text-gray-600">COPYRIGHT &copy; 케어콕 ALL RIGHTS RESERVED.</p>
         </div>
       </footer>
     </div>
