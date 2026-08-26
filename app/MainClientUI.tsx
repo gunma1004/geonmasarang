@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // 서울·경기 전지역 데이터
 const regionData: Record<string, { name: string; districts: Record<string, { name: string; dongs: string[] }> }> = {
@@ -82,7 +82,7 @@ const regionData: Record<string, { name: string; districts: Record<string, { nam
   }
 };
 
-const shops = [
+const initialShops = [
   {
     id: 1,
     name: "🔥 24시미녀홈타이",
@@ -107,7 +107,7 @@ const shops = [
     badgeColor: "bg-amber-500 text-black",
     image: "/shop2.jpg",
     courses: [
-      { name: "맞춤형 바디 케어 (60분)", price: "90,000원", best: false },
+      { name: "아로디시태국 (90분)", price: "100,000원", best: false },
       { name: "스페셜 아로마 힐링 (60분)", price: "140,000원", best: true },
     ]
   },
@@ -141,7 +141,7 @@ const shops = [
   },
   {
     id: 5,
-    name: "👑 어린마인드홈타이",
+    name: "👑 한국골든테라피",
     location: "서울·경기 전지역",
     desc: "🚀 후불제 안심 이용! 수도권 전지역 평균 25분 내 칼같이 도착",
     phone: "0507-1280-3170",
@@ -159,6 +159,13 @@ export default function MainClientUI() {
   const [selectedRegion, setSelectedRegion] = useState("seoul");
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [selectedDong, setSelectedDong] = useState("");
+  const [shopList, setShopList] = useState(initialShops);
+
+  // 랜딩 시(페이지 첫 로드) 제휴업체 목록 무작위 셔플
+  useEffect(() => {
+    const shuffled = [...initialShops].sort(() => Math.random() - 0.5);
+    setShopList(shuffled);
+  }, []);
 
   const handleRegionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedRegion(e.target.value);
@@ -194,12 +201,12 @@ export default function MainClientUI() {
           <a href="/" className="flex items-center gap-3 group">
             <img 
               src="/logo.png" 
-              alt="수도권 테라피랩 로고" 
+              alt="케어콕 로고" 
               className="w-10 h-10 rounded-xl object-cover border border-amber-500/40 shadow-[0_0_12px_rgba(245,158,11,0.4)] group-hover:scale-105 transition-transform" 
             />
             <div className="flex flex-col">
               <span className="text-xl font-black tracking-wider bg-gradient-to-r from-amber-300 via-amber-400 to-yellow-500 bg-clip-text text-transparent">
-                수도권 테라피랩
+                케어콕
               </span>
               <span className="text-[10px] text-gray-400 tracking-tighter">SEOUL & GYEONGGI PREMIUM</span>
             </div>
@@ -219,12 +226,12 @@ export default function MainClientUI() {
 
       <main className="max-w-4xl mx-auto px-4 py-8 w-full flex-1">
         
-        {/* 📍 메인 비주얼 배너 (수정 완료: public/my-banner.png 적용) */}
+        {/* 메인 비주얼 배너 */}
         <section className="text-center my-2">
           <div className="mb-8 overflow-hidden rounded-3xl border border-amber-500/30 shadow-[0_0_40px_rgba(245,158,11,0.15)] relative w-full">
             <img 
               src="/my-banner.png" 
-              alt="수도권 테라피랩 메인 배너" 
+              alt="케어콕 메인 배너" 
               className="w-full h-auto object-cover block"
             />
           </div>
@@ -312,7 +319,7 @@ export default function MainClientUI() {
             </div>
           </div>
 
-          {shops.map((shop) => (
+          {shopList.map((shop) => (
             <article key={shop.id} className="bg-gradient-to-b from-[#141416] to-[#0d0d0f] border border-amber-500/20 hover:border-amber-500/60 transition-all duration-300 rounded-3xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.5)] relative group">
               
               <div className="relative h-48 md:h-56 w-full overflow-hidden">
@@ -369,7 +376,7 @@ export default function MainClientUI() {
                     <span className="text-base">📞</span> 전화로 즉시예약
                   </a>
                   <a 
-                    href={`sms:${shop.phone}?body=${encodeURIComponent(`${shop.name} 문의드립니다. (수도권 테라피랩 보고 연락드렸어요)`)}`} 
+                    href={`sms:${shop.phone}?body=${encodeURIComponent(`${shop.name} 문의드립니다. (케어콕 보고 연락드렸어요)`)}`} 
                     className="flex items-center justify-center gap-2 bg-neutral-900 hover:bg-neutral-800 text-white font-black py-4 rounded-2xl text-xs md:text-sm border border-white/10 transition-all hover:border-amber-500/40 transform active:scale-95 shadow-md"
                   >
                     <span className="text-base">💬</span> 간편 문자상담
@@ -385,8 +392,8 @@ export default function MainClientUI() {
 
       <footer className="bg-[#030303] border-t border-white/10 py-10 text-center text-gray-500 text-xs mt-auto">
         <div className="max-w-4xl mx-auto px-4 space-y-3">
-          <p className="text-gray-400 font-bold">수도권 테라피랩은 건전하고 안전한 제휴 마사지 정보 플랫폼입니다.</p>
-          <p className="text-[11px] text-gray-600">COPYRIGHT &copy; 수도권 테라피랩 ALL RIGHTS RESERVED.</p>
+          <p className="text-gray-400 font-bold">케어콕은 건전하고 안전한 제휴 마사지 정보 플랫폼입니다.</p>
+          <p className="text-[11px] text-gray-600">COPYRIGHT &copy; 케어콕 ALL RIGHTS RESERVED.</p>
         </div>
       </footer>
     </div>

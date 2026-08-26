@@ -10,19 +10,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'daily',
       priority: 1.0,
     },
-    // 서울 지역
+    // 서울 주요 지역
     { url: `${baseUrl}/seoul/gangnam`, lastModified: new Date(), priority: 0.8 },
     { url: `${baseUrl}/seoul/seocho`, lastModified: new Date(), priority: 0.8 },
     { url: `${baseUrl}/seoul/mapo`, lastModified: new Date(), priority: 0.8 },
     { url: `${baseUrl}/seoul/songpa`, lastModified: new Date(), priority: 0.8 },
     { url: `${baseUrl}/seoul/yongsan`, lastModified: new Date(), priority: 0.8 },
     { url: `${baseUrl}/seoul/jongno`, lastModified: new Date(), priority: 0.8 },
-    // 경기 지역
-    { url: `${baseUrl}/seongnam_bundang`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/suwon_yeongtong`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/goyang_ilsandong`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/yongin_suji`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/anyang_dongan`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/hanam`, lastModified: new Date(), priority: 0.8 },
+
+    // 경기 주요 지역 (gyeonggi prefix 적용)
+    { url: `${baseUrl}/gyeonggi/seongnam_bundang`, lastModified: new Date(), priority: 0.8 },
+    { url: `${baseUrl}/gyeonggi/suwon_yeongtong`, lastModified: new Date(), priority: 0.8 },
+    { url: `${baseUrl}/gyeonggi/goyang_ilsandong`, lastModified: new Date(), priority: 0.8 },
+    { url: `${baseUrl}/gyeonggi/yongin_suji`, lastModified: new Date(), priority: 0.8 },
+    { url: `${baseUrl}/gyeonggi/anyang_dongan`, lastModified: new Date(), priority: 0.8 },
+    { url: `${baseUrl}/gyeonggi/hanam`, lastModified: new Date(), priority: 0.8 },
   ]
 }
