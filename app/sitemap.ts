@@ -1,29 +1,40 @@
-import { MetadataRoute } from 'next'
+import { MetadataRoute } from 'next';
+import { regionData } from './data/regions'; // 👈 '@/data/regions' 대신 './data/regions'로 변경
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://carekok.massagemong-kr.workers.dev'
+  const baseUrl = 'https://geonmasarang.netlify.app';
 
-  return [
+  const sitemapList: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 1.0,
     },
-    // 서울 주요 지역
-    { url: `${baseUrl}/seoul/gangnam`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/seoul/seocho`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/seoul/mapo`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/seoul/songpa`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/seoul/yongsan`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/seoul/jongno`, lastModified: new Date(), priority: 0.8 },
+  ];
 
-    // 경기 주요 지역
-    { url: `${baseUrl}/gyeonggi/seongnam_bundang`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/gyeonggi/suwon_yeongtong`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/gyeonggi/goyang_ilsandong`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/gyeonggi/yongin_suji`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/gyeonggi/anyang_dongan`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/gyeonggi/hanam`, lastModified: new Date(), priority: 0.8 },
-  ]
+  // 서울, 경기, 인천의 모든 구·시·군 및 동 단위 URL 자동 추출
+  Object.entries(regionData).forEach(([regionKey, region]) => {
+    Object.entries(region.districts).forEach(([districtKey, district]) => {
+      // 📍 구/시/군 단위
+      sitemapList.push({
+        url: `${baseUrl}/${regionKey}/${districtKey}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.8,
+      });
+
+      // 📍 동 단위
+      district.dongs.forEach((dong) => {
+        sitemapList.push({
+          url: `${baseUrl}/${regionKey}/${districtKey}/${encodeURIComponent(dong)}`,
+          lastModified: new Date(),
+          changeFrequency: 'monthly',
+          priority: 0.6,
+        });
+      });
+    });
+  });
+
+  return sitemapList;
 }

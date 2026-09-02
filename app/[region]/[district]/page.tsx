@@ -2,6 +2,62 @@ import { regionData } from "../../data/regions";
 import Link from "next/link";
 import type { Metadata } from "next";
 
+// 🎯 규칙 엄수: "출장 [완화단어] 마사지" 40가지 패턴
+const RELAXED_MASSAGE_PATTERNS = [
+  "출장 힐링 마사지",
+  "출장 타이 마사지",
+  "출장 아로마 마사지",
+  "출장 스웨디시 마사지",
+  "출장 홈타이 마사지",
+  "출장 릴렉스 마사지",
+  "출장 홈케어 마사지",
+  "출장 바디케어 마사지",
+  "출장 전신 릴렉스 마사지",
+  "출장 피로회복 마사지",
+  "출장 감성 힐링 마사지",
+  "출장 프리미엄 홈 마사지",
+  "출장 소프트 아로마 마사지",
+  "출장 안심 방문 마사지",
+  "출장 딥티슈 힐링 마사지",
+  "출장 웰빙 케어 마사지",
+  "출장 프라이빗 힐링 마사지",
+  "출장 활력 충전 마사지",
+  "출장 림프 순환 마사지",
+  "출장 데일리 홈 마사지",
+  "출장 근육 이완 마사지",
+  "출장 맞춤형 아로마 마사지",
+  "출장 힐링 바디 마사지",
+  "출장 스페셜 릴렉스 마사지",
+  "출장 럭셔리 스웨디시 마사지",
+  "출장 에센셜 아로마 마사지",
+  "출장 정통 타이 마사지",
+  "출장 감성 스웨디시 마사지",
+  "출장 스트레스 해소 마사지",
+  "출장 리프레시 힐링 마사지",
+  "출장 전신 순환 마사지",
+  "출장 편안한 힐링 마사지",
+  "출장 호텔식 힐링 마사지",
+  "출장 오가닉 아로마 마사지",
+  "출장 프로 홈타이 마사지",
+  "출장 집중 바디 마사지",
+  "출장 심신 안정 마사지",
+  "출장 디테일 홈케어 마사지",
+  "출장 1대1 맞춤 마사지",
+  "출장 프리미엄 방문 마사지"
+];
+
+// 지역 키 기반 완화 패턴 2개 고유 배정 (중복 배제)
+function getRelaxedPatterns(key: string): [string, string] {
+  let hash = 0;
+  for (let i = 0; i < key.length; i++) {
+    hash = (hash << 5) - hash + key.charCodeAt(i);
+    hash |= 0;
+  }
+  const idx1 = Math.abs(hash) % RELAXED_MASSAGE_PATTERNS.length;
+  const idx2 = (idx1 + 11) % RELAXED_MASSAGE_PATTERNS.length;
+  return [RELAXED_MASSAGE_PATTERNS[idx1], RELAXED_MASSAGE_PATTERNS[idx2]];
+}
+
 interface PageProps {
   params: Promise<{
     region: string;
@@ -9,7 +65,7 @@ interface PageProps {
   }>;
 }
 
-// 🟢 1. 구/시 단위 동적 SEO 메타 태그 생성 (출장마사지 타겟팅)
+// 🟢 동적 SEO 메타데이터 (출장 [완화키워드] 마사지 완벽 매칭)
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const resolvedParams = await params;
   const { region, district } = resolvedParams;
@@ -18,17 +74,24 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const districtName = regionInfo?.districts[district]?.name || "상세 지역";
   const regionName = regionInfo?.name || "수도권";
 
-  const title = `${districtName} 출장마사지 24시 홈타이 스웨디시 제휴 추천 - 케어콕`;
-  const description = `${regionName} ${districtName} 전지역 25분 내 빠른 방문 출장마사지! 24시 후불제 안심 홈타이, 힐링 스웨디시 제휴업체 코스 및 요금 실시간 확인.`;
+  const [pattern1, pattern2] = getRelaxedPatterns(`${region}_${district}`);
+  const canonicalUrl = `https://geonmasarang.netlify.app/${region}/${district}`;
+
+  const title = `${districtName} ${pattern1} 24시 제휴 안내 - 건마사랑`;
+  const description = `${regionName} ${districtName} 전지역 25분 내 빠른 방문 ${pattern1} 및 안심 ${pattern2}! 24시 후불제 제휴업체 코스와 요금을 확인하세요.`;
 
   return {
     title,
     description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
     openGraph: {
       title,
       description,
+      url: canonicalUrl,
       type: "website",
-      siteName: "케어콕",
+      siteName: "건마사랑",
       images: [
         {
           url: "/my-banner.png",
@@ -48,7 +111,7 @@ const shops = [
   {
     id: 1,
     name: "🔥 24시미녀홈타이",
-    location: "서울·경기 전지역 (실시간 신속 방문)",
+    location: "서울·경기·인천 전지역 (실시간 신속 방문)",
     desc: "⭐ 만족도 1위! 지친 일상을 깨우는 정성 가득한 테라피 & 릴렉싱 프로그램",
     phone: "0507-1280-3126",
     badge: "실시간 인기폭발",
@@ -62,7 +125,7 @@ const shops = [
   {
     id: 2,
     name: "✨달달한국인홈케어",
-    location: "서울·경기 전지역",
+    location: "서울·경기·인천 전지역",
     desc: "🏆 품격 있는 힐링을 선사하는 프라이빗 방문 테라피 서비스",
     phone: "0507-1280-3172",
     badge: "만족도 최우수",
@@ -76,7 +139,7 @@ const shops = [
   {
     id: 3,
     name: "💎 젊고마인드좋은홈타이",
-    location: "서울·경기 전지역",
+    location: "서울·경기·인천 전지역",
     desc: "⚡ 칼배송보다 빠른 방문! 철저한 위생 관리와 럭셔리 케어",
     phone: "0507-1280-3174",
     badge: "24시 상시할인",
@@ -90,7 +153,7 @@ const shops = [
   {
     id: 4,
     name: "🌟 베테랑 혼혈스웨디시",
-    location: "서울·경기 전지역",
+    location: "서울·경기·인천 전지역",
     desc: "💯 전문 힐러들의 맞춤형 피로 회복 프로그램 진행 중",
     phone: "0507-1280-3128",
     badge: "신규 제휴할인",
@@ -104,7 +167,7 @@ const shops = [
   {
     id: 5,
     name: "👑 한국골든테라피",
-    location: "서울·경기 전지역",
+    location: "서울·경기·인천 전지역",
     desc: "🚀 후불제 안심 이용! 수도권 전지역 평균 25분 내 칼같이 도착",
     phone: "0507-1280-3170",
     badge: "재방문율 99%",
@@ -127,6 +190,8 @@ export default async function DistrictPage({ params }: PageProps) {
   const regionName = regionInfo?.name || "수도권";
   const dongs = districtObj?.dongs || [];
 
+  const [pattern1] = getRelaxedPatterns(`${region}_${district}`);
+
   return (
     <div className="bg-[#050505] text-gray-100 min-h-screen flex flex-col font-sans selection:bg-amber-500 selection:text-black">
       
@@ -136,14 +201,14 @@ export default async function DistrictPage({ params }: PageProps) {
           <Link href="/" className="flex items-center gap-3 group">
             <img 
               src="/logo.png" 
-              alt="케어콕 로고" 
+              alt="건마사랑 로고" 
               className="w-10 h-10 rounded-xl object-cover border border-amber-500/40 shadow-[0_0_12px_rgba(245,158,11,0.4)] group-hover:scale-105 transition-transform" 
             />
             <div className="flex flex-col">
               <span className="text-xl font-black tracking-wider bg-gradient-to-r from-amber-300 via-amber-400 to-yellow-500 bg-clip-text text-transparent">
-                케어콕
+                건마사랑
               </span>
-              <span className="text-[10px] text-gray-400 tracking-tighter">SEOUL & GYEONGGI PREMIUM</span>
+              <span className="text-[10px] text-gray-400 tracking-tighter">SEOUL, GYEONGGI & INCHEON PREMIUM</span>
             </div>
           </Link>
           
@@ -160,22 +225,22 @@ export default async function DistrictPage({ params }: PageProps) {
           <div className="mb-8 overflow-hidden rounded-3xl border border-amber-500/30 shadow-[0_0_40px_rgba(245,158,11,0.15)] relative w-full">
             <img 
               src="/my-banner.png" 
-              alt={`${districtName} 출장마사지 배너`} 
+              alt={`${districtName} ${pattern1} 배너`} 
               className="w-full h-auto object-cover block"
             />
           </div>
 
-          {/* 해당 구에 속한 모든 세부 동 목록 */}
+          {/* 해당 구에 속한 세부 동 목록 */}
           {dongs.length > 0 && (
             <div className="bg-gradient-to-b from-[#18181b] to-[#0f0f11] border-2 border-amber-500/40 p-6 rounded-3xl max-w-xl mx-auto mb-14 shadow-xl text-left">
               <h2 className="text-xs text-amber-400 font-black uppercase tracking-wider mb-3">
-                ✨ {districtName} 세부 동 선택 (출장마사지 빠른 예약)
+                ✨ {districtName} 세부 동 선택 ({pattern1} 신속 예약)
               </h2>
               <div className="flex flex-wrap gap-2">
                 {dongs.map((dong, idx) => (
                   <Link 
                     key={idx} 
-                    href={`/${region}/${district}/${dong}`}
+                    href={`/${region}/${district}/${encodeURIComponent(dong)}`}
                     className="bg-black/70 hover:bg-amber-500 hover:text-black text-gray-200 text-xs font-bold px-3.5 py-2 rounded-xl border border-amber-500/25 transition-all"
                   >
                     {dong}
@@ -191,9 +256,9 @@ export default async function DistrictPage({ params }: PageProps) {
           <div className="flex justify-between items-end mb-4 px-2">
             <div>
               <h1 className="text-xl md:text-2xl font-black text-white flex items-center gap-2">
-                <span>🔥</span> {districtName} 출장마사지 추천 제휴업체
+                <span>🔥</span> {districtName} {pattern1} 추천 제휴업체
               </h1>
-              <p className="text-xs text-gray-400 mt-1">{districtName} 전지역 25분 내 즉시 방문 가능한 검증된 프리미엄 홈케어 샵입니다.</p>
+              <p className="text-xs text-gray-400 mt-1">{regionName} {districtName} 전지역 빠른 방문을 제공하는 검증된 {pattern1} 제휴 샵입니다.</p>
             </div>
           </div>
 
@@ -218,7 +283,7 @@ export default async function DistrictPage({ params }: PageProps) {
               <div className="p-6 md:p-7 -mt-6 relative z-10">
                 <div className="mb-2">
                   <span className="text-xs text-amber-400/90 font-bold bg-amber-500/10 px-2.5 py-1 rounded-lg border border-amber-500/20 inline-block mb-2">
-                    📍 {districtName} 전지역 실시간 출장 방문
+                    📍 {districtName} 전지역 실시간 안심 방문 케어
                   </span>
                 </div>
 
@@ -254,7 +319,7 @@ export default async function DistrictPage({ params }: PageProps) {
                     <span className="text-base">📞</span> 전화로 즉시예약
                   </a>
                   <a 
-                    href={`sms:${shop.phone}?body=${encodeURIComponent(`${districtName} ${shop.name} 출장 문의드립니다. (케어콕 보고 연락드렸어요)`)}`} 
+                    href={`sms:${shop.phone}?body=${encodeURIComponent(`${districtName} ${shop.name} ${pattern1} 문의드립니다. (건마사랑 보고 연락드렸어요)`)}`} 
                     className="flex items-center justify-center gap-2 bg-neutral-900 hover:bg-neutral-800 text-white font-black py-4 rounded-2xl text-xs md:text-sm border border-white/10 transition-all hover:border-amber-500/40 transform active:scale-95 shadow-md"
                   >
                     <span className="text-base">💬</span> 간편 문자상담
@@ -270,8 +335,8 @@ export default async function DistrictPage({ params }: PageProps) {
 
       <footer className="bg-[#030303] border-t border-white/10 py-10 text-center text-gray-500 text-xs mt-auto">
         <div className="max-w-4xl mx-auto px-4 space-y-3">
-          <p className="text-gray-400 font-bold">케어콕은 건전하고 안전한 제휴 마사지 정보 플랫폼입니다.</p>
-          <p className="text-[11px] text-gray-600">COPYRIGHT &copy; 케어콕 ALL RIGHTS RESERVED.</p>
+          <p className="text-gray-400 font-bold">건마사랑은 건전하고 쾌적한 방문 힐링 및 홈케어 테라피 정보 플랫폼입니다.</p>
+          <p className="text-[11px] text-gray-600">COPYRIGHT &copy; 건마사랑 (geonmasarang.netlify.app) ALL RIGHTS RESERVED.</p>
         </div>
       </footer>
     </div>

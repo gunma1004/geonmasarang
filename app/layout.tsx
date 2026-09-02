@@ -3,15 +3,15 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   // 🎯 메타데이터 기본 URL 지정
-  metadataBase: new URL("https://carekok.massagemong-kr.workers.dev"),
-  title: "케어콕 - 서울 경기 24시 스웨디시 홈타이 출장마사지 제휴 할인 정보",
-  description: "서울 및 경기도 전지역 25분 내 신속 방문 출장마사지! 24시 연중무휴 후불제 안심 홈타이, 스웨디시 제휴업체 정보 안내.",
+  metadataBase: new URL("https://geonmasarang.netlify.app"),
+  title: "건마사랑 - 서울 경기 인천 24시 출장 힐링 마사지 및 홈케어 제휴 정보",
+  description: "서울, 경기, 인천 전지역 신속 방문 출장 힐링 마사지 및 출장 홈타이 마사지! 24시 연중무휴 안심 출장 홈케어 마사지, 스웨디시 제휴 정보 안내.",
   openGraph: {
-    title: "케어콕 - 서울 경기 24시 스웨디시 홈타이 출장마사지 제휴 할인 정보",
-    description: "서울 및 경기도 전지역 25분 내 신속 방문 출장마사지! 24시 연중무휴 후불제 안심 홈타이, 스웨디시 제휴업체 정보 안내.",
-    siteName: "케어콕",
+    title: "건마사랑 - 서울 경기 인천 24시 출장 힐링 마사지 및 홈케어 제휴 정보",
+    description: "서울, 경기, 인천 전지역 신속 방문 출장 힐링 마사지 및 출장 홈타이 마사지! 24시 연중무휴 안심 출장 홈케어 마사지, 스웨디시 제휴 정보 안내.",
+    siteName: "건마사랑",
     type: "website",
-    url: "https://carekok.massagemong-kr.workers.dev",
+    url: "https://geonmasarang.netlify.app",
     images: ["/logo.png"],
   },
   // 🎯 네이버 & 구글 서치콘솔 소유확인 메타태그

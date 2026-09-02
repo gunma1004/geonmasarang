@@ -1,4 +1,5 @@
-import { regionData } from "../../../data/regions";
+// app/[region]/page.tsx
+import { regionData } from "../data/regions"; // 파일 위치에 맞춰 경로 확인 (예: ../../data/regions 또는 @/data/regions)
 import Link from "next/link";
 import type { Metadata } from "next";
 
@@ -46,7 +47,6 @@ const RELAXED_MASSAGE_PATTERNS = [
   "출장 프리미엄 방문 마사지"
 ];
 
-// 동 명칭 해시 기반 완화 패턴 2개 고유 배정 (중복 배제 및 자연스러운 순환)
 function getRelaxedPatterns(key: string): [string, string] {
   let hash = 0;
   for (let i = 0; i < key.length; i++) {
@@ -54,33 +54,29 @@ function getRelaxedPatterns(key: string): [string, string] {
     hash |= 0;
   }
   const idx1 = Math.abs(hash) % RELAXED_MASSAGE_PATTERNS.length;
-  const idx2 = (idx1 + 13) % RELAXED_MASSAGE_PATTERNS.length;
+  const idx2 = (idx1 + 5) % RELAXED_MASSAGE_PATTERNS.length;
   return [RELAXED_MASSAGE_PATTERNS[idx1], RELAXED_MASSAGE_PATTERNS[idx2]];
 }
 
 interface PageProps {
   params: Promise<{
     region: string;
-    district: string;
-    dong: string;
   }>;
 }
 
-// 🟢 1. 동 단위 동적 SEO 메타 태그 생성 (출장 [완화키워드] 마사지 타겟팅 및 중복 방지)
+// 🟢 시·도 단위 동적 SEO 메타 태그 생성
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const resolvedParams = await params;
-  const { region, district, dong } = resolvedParams;
-  const decodedDong = decodeURIComponent(dong);
+  const { region } = resolvedParams;
 
   const regionInfo = regionData[region];
-  const districtName = regionInfo?.districts[district]?.name || district;
   const regionName = regionInfo?.name || "수도권";
 
-  const [pattern1, pattern2] = getRelaxedPatterns(`${region}_${district}_${decodedDong}`);
-  const canonicalUrl = `https://geonmasarang.netlify.app/${region}/${district}/${encodeURIComponent(dong)}`;
+  const [pattern1, pattern2] = getRelaxedPatterns(region);
+  const canonicalUrl = `https://geonmasarang.netlify.app/${region}`;
 
-  const title = `${districtName} ${decodedDong} ${pattern1} 24시 제휴 안내 - 건마사랑`;
-  const description = `${regionName} ${districtName} ${decodedDong} 전지역 25분 내 빠른 방문 ${pattern1} 및 ${pattern2}! 24시 후불제 안심 제휴 샵 코스와 요금을 확인하세요.`;
+  const title = `${regionName} ${pattern1} 24시 제휴 안내 - 건마사랑`;
+  const description = `${regionName} 전지역 25분 내 빠른 방문 ${pattern1} 및 안심 ${pattern2}! 각 구·시·군별 제휴 샵 코스와 실시간 요금을 비교해 보세요.`;
 
   return {
     title,
@@ -94,11 +90,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       url: canonicalUrl,
       type: "website",
       siteName: "건마사랑",
-      images: [
-        {
-          url: "/my-banner.png",
-        },
-      ],
+      images: [{ url: "/my-banner.png" }],
     },
     twitter: {
       card: "summary_large_image",
@@ -108,7 +100,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-// 제휴 업체 데이터
 const shops = [
   {
     id: 1,
@@ -182,16 +173,15 @@ const shops = [
   },
 ];
 
-export default async function DongPage({ params }: PageProps) {
+export default async function RegionPage({ params }: PageProps) {
   const resolvedParams = await params;
-  const { region, district, dong } = resolvedParams;
-  const decodedDong = decodeURIComponent(dong);
+  const { region } = resolvedParams;
 
   const regionInfo = regionData[region];
-  const districtObj = regionInfo?.districts[district];
-  const districtName = districtObj?.name || district;
+  const regionName = regionInfo?.name || "수도권";
+  const districts = regionInfo?.districts || {};
 
-  const [pattern1] = getRelaxedPatterns(`${region}_${district}_${decodedDong}`);
+  const [pattern1] = getRelaxedPatterns(region);
 
   return (
     <div className="bg-[#050505] text-gray-100 min-h-screen flex flex-col font-sans selection:bg-amber-500 selection:text-black">
@@ -213,35 +203,53 @@ export default async function DongPage({ params }: PageProps) {
           </Link>
 
           <Link
-            href={`/${region}/${district}`}
-            className="text-xs px-4 py-2 rounded-xl bg-neutral-800 text-amber-400 font-extrabold border border-amber-500/30 hover:bg-neutral-700 transition-all"
+            href="/"
+            className="text-xs px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-400 text-black font-extrabold shadow-lg hover:brightness-110 transition-all"
           >
-            ← {districtName} 전체 목록으로
+            🏠 메인으로 가기
           </Link>
         </div>
       </header>
 
       <main className="max-w-4xl mx-auto px-4 py-8 w-full flex-1">
-        {/* 동 맞춤 비주얼 배너 */}
+        {/* 비주얼 배너 */}
         <section className="text-center my-2">
           <div className="mb-8 overflow-hidden rounded-3xl border border-amber-500/30 shadow-[0_0_40px_rgba(245,158,11,0.15)] relative w-full">
             <img
               src="/my-banner.png"
-              alt={`${districtName} ${decodedDong} ${pattern1} 배너`}
+              alt={`${regionName} ${pattern1} 배너`}
               className="w-full h-auto object-cover block"
             />
           </div>
+
+          {/* 해당 시·도에 속한 구/시 목록 버튼 */}
+          <div className="bg-gradient-to-b from-[#18181b] to-[#0f0f11] border-2 border-amber-500/40 p-6 rounded-3xl max-w-xl mx-auto mb-14 shadow-xl text-left">
+            <h2 className="text-xs text-amber-400 font-black uppercase tracking-wider mb-3">
+              📍 {regionName} 구·시·군 선택 ({pattern1} 안내)
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {Object.entries(districts).map(([dKey, dObj]) => (
+                <Link
+                  key={dKey}
+                  href={`/${region}/${dKey}`}
+                  className="bg-black/70 hover:bg-amber-500 hover:text-black text-gray-200 text-xs font-bold px-3.5 py-2 rounded-xl border border-amber-500/25 transition-all"
+                >
+                  {dObj.name}
+                </Link>
+              ))}
+            </div>
+          </div>
         </section>
 
-        {/* 제휴 업체 카드 리스트 */}
+        {/* 제휴 업체 목록 */}
         <section className="space-y-6">
           <div className="flex justify-between items-end mb-4 px-2">
             <div>
               <h1 className="text-xl md:text-2xl font-black text-white flex items-center gap-2">
-                <span>🔥</span> {districtName} {decodedDong} {pattern1} 추천 제휴업체
+                <span>🔥</span> {regionName} {pattern1} 추천 제휴업체
               </h1>
               <p className="text-xs text-gray-400 mt-1">
-                {decodedDong} 전지역 25분 내 빠른 방문이 가능한 검증된 {pattern1} 제휴 샵입니다.
+                {regionName} 전지역 25분 내 빠른 방문이 가능한 안심 {pattern1} 제휴점 안내입니다.
               </p>
             </div>
           </div>
@@ -254,11 +262,10 @@ export default async function DongPage({ params }: PageProps) {
               <div className="relative h-48 md:h-56 w-full overflow-hidden">
                 <img
                   src={shop.image}
-                  alt={`${districtName} ${decodedDong} ${shop.name}`}
+                  alt={`${regionName} ${shop.name}`}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter brightness-90"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#141416] via-transparent to-black/30"></div>
-
                 <div className="absolute top-4 left-4 flex items-center gap-2">
                   <span className={`text-[11px] font-black px-3 py-1 rounded-full shadow-lg ${shop.badgeColor}`}>
                     {shop.badge}
@@ -269,7 +276,7 @@ export default async function DongPage({ params }: PageProps) {
               <div className="p-6 md:p-7 -mt-6 relative z-10">
                 <div className="mb-2">
                   <span className="text-xs text-amber-400/90 font-bold bg-amber-500/10 px-2.5 py-1 rounded-lg border border-amber-500/20 inline-block mb-2">
-                    📍 {districtName} {decodedDong} 전지역 실시간 안심 방문 케어
+                    📍 {regionName} 전지역 실시간 안심 방문 케어
                   </span>
                 </div>
 
@@ -313,7 +320,7 @@ export default async function DongPage({ params }: PageProps) {
                   </a>
                   <a
                     href={`sms:${shop.phone}?body=${encodeURIComponent(
-                      `${districtName} ${decodedDong} ${shop.name} ${pattern1} 문의드립니다. (건마사랑 보고 연락드렸어요)`
+                      `${regionName} ${shop.name} ${pattern1} 문의드립니다. (건마사랑 보고 연락드렸어요)`
                     )}`}
                     className="flex items-center justify-center gap-2 bg-neutral-900 hover:bg-neutral-800 text-white font-black py-4 rounded-2xl text-xs md:text-sm border border-white/10 transition-all hover:border-amber-500/40 transform active:scale-95 shadow-md"
                   >

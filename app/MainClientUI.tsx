@@ -2,7 +2,51 @@
 
 import { useState, useEffect } from "react";
 
-// 서울·경기 전지역 데이터
+// 🎯 스팸 회피형 40가지 세부 복합 서비스 패턴
+export const SERVICE_PATTERNS = [
+  "출장 힐링 마사지",
+  "출장 타이 마사지",
+  "출장 아로마 마사지",
+  "출장 스웨디시 마사지",
+  "출장 홈타이 마사지",
+  "출장 릴렉스 마사지",
+  "출장 홈케어 마사지",
+  "출장 테라피 케어",
+  "출장 바디 케어 마사지",
+  "출장 프리미엄 홈타이",
+  "출장 아로마 테라피",
+  "출장 딥티슈 릴렉싱",
+  "출장 힐링 바디 마사지",
+  "출장 웰빙 홈케어",
+  "출장 스트레스 완화 테라피",
+  "출장 전신 릴렉스 마사지",
+  "출장 스포츠 컨디셔닝 케어",
+  "출장 감성 스웨디시",
+  "출장 림프 순환 마사지",
+  "출장 프라이빗 힐링 케어",
+  "출장 맞춤형 아로마 케어",
+  "출장 스페셜 바디 릴렉스",
+  "출장 활력 충전 테라피",
+  "출장 집중 피로회복 마사지",
+  "출장 프로페셔널 홈타이",
+  "출장 힐링 테라피 솔루션",
+  "출장 럭셔리 스웨디시",
+  "출장 소프트 아로마 마사지",
+  "출장 토탈 홈케어 서비스",
+  "출장 안심 방문 마사지",
+  "출장 데일리 릴렉스 케어",
+  "출장 에센셜 바디 테라피",
+  "출장 편안한 힐링 테라피",
+  "출장 근육 완화 바디 마사지",
+  "출장 감성 힐링 스웨디시",
+  "출장 1:1 맞춤 홈타이",
+  "출장 스파 스타일 홈케어",
+  "출장 리프레시 힐링 마사지",
+  "출장 오가닉 아로마 마사지",
+  "출장 프리미엄 방문 테라피"
+];
+
+// 서울·경기·인천 전지역 데이터
 const regionData: Record<string, { name: string; districts: Record<string, { name: string; dongs: string[] }> }> = {
   seoul: {
     name: "서울특별시",
@@ -79,6 +123,21 @@ const regionData: Record<string, { name: string; districts: Record<string, { nam
       yangpyeong: { name: "양평군", dongs: ["양평읍", "강상면", "강하면", "양서면", "옥천면", "지평면", "용문면", "개군면"] },
       yeoncheon: { name: "연천군", dongs: ["연천읍", "전곡읍", "군남면", "청산면", "백학면", "미산면", "왕징면", "신서면", "중면"] }
     }
+  },
+  incheon: {
+    name: "인천광역시",
+    districts: {
+      junggu: { name: "중구", dongs: ["신포동", "연안동", "신흥동", "도원동", "율목동", "동인천동", "개항동", "영종동", "영종1동", "영종2동", "운서동", "용유동"] },
+      donggu: { name: "동구", dongs: ["만석동", "화수1·화평동", "화수2동", "송현1·2동", "송현3동", "송림1동", "송림2동", "송림3·5동", "송림4동", "송림6동", "금창동"] },
+      michuhol: { name: "미추홀구", dongs: ["숭의1·4동", "숭의2동", "숭의3동", "용현1·4동", "용현2동", "용현3동", "용현5동", "학익1동", "학익2동", "도화1동", "도화2·3동", "주안1동", "주안2동", "주안3동", "주안4동", "주안5동", "주안6동", "주안7동", "주안8동", "관교동", "문학동"] },
+      yeonsu: { name: "연수구", dongs: ["옥련1동", "옥련2동", "선학동", "연수1동", "연수2동", "연수3동", "청학동", "동춘1동", "동춘2동", "동춘3동", "송도1동", "송도2동", "송도3동", "송도4동", "송도5동"] },
+      namdong: { name: "남동구", dongs: ["구월1동", "구월2동", "구월3동", "구월4동", "간석1동", "간석2동", "간석3동", "간석4동", "만수1동", "만수2동", "만수3동", "만수4동", "만수5동", "만수6동", "장수서창동", "서창2동", "남촌도림동", "논현1동", "논현2동", "논현고잔동"] },
+      bupyeong: { name: "부평구", dongs: ["부평1동", "부평2동", "부평3동", "부평4동", "부평5동", "부평6동", "산곡1동", "산곡2동", "산곡3동", "산곡4동", "청천1동", "청천2동", "갈산1동", "갈산2동", "삼산1동", "삼산2동", "부개1동", "부개2동", "부개3동", "일신동", "십정1동", "십정2동"] },
+      gyeyang: { name: "계양구", dongs: ["효성1동", "효성2동", "계산1동", "계산2동", "계산3동", "계산4동", "작전1동", "작전2동", "작전서운동", "계양1동", "계양2동", "계양3동"] },
+      seogu: { name: "서구", dongs: ["검암경서동", "연희동", "청라1동", "청라2동", "청라3동", "가정1동", "가정2동", "가정3동", "석남1동", "석남2동", "석남3동", "신현원창동", "가좌1동", "가좌2동", "가좌3동", "가좌4동", "검단동", "불로대곡동", "원당동", "당하동", "오류왕길동", "마전동", "아라동"] },
+      ganghwa: { name: "강화군", dongs: ["강화읍", "선원면", "불은면", "길상면", "화도면", "양도면", "내가면", "하점면", "양사면", "송해면", "교동면", "삼산면", "서도면"] },
+      ongjin: { name: "옹진군", dongs: ["북도면", "연평면", "백령면", "대청면", "덕적면", "자월면", "영흥면"] }
+    }
   }
 };
 
@@ -86,7 +145,7 @@ const initialShops = [
   {
     id: 1,
     name: "🔥 24시미녀홈타이",
-    location: "서울·경기 전지역 (실시간 신속 방문)",
+    location: "서울·경기·인천 전지역 (실시간 신속 방문)",
     desc: "⭐ 만족도 1위! 지친 일상을 깨우는 정성 가득한 테라피 & 릴렉싱 프로그램",
     phone: "0507-1280-3126",
     badge: "실시간 인기폭발",
@@ -100,7 +159,7 @@ const initialShops = [
   {
     id: 2,
     name: "✨달달한국인홈케어",
-    location: "서울·경기 전지역",
+    location: "서울·경기·인천 전지역",
     desc: "🏆 품격 있는 힐링을 선사하는 프라이빗 방문 테라피 서비스",
     phone: "0507-1280-3172",
     badge: "만족도 최우수",
@@ -114,7 +173,7 @@ const initialShops = [
   {
     id: 3,
     name: "💎 젊고마인드좋은홈타이",
-    location: "서울·경기 전지역",
+    location: "서울·경기·인천 전지역",
     desc: "⚡ 칼배송보다 빠른 방문! 철저한 위생 관리와 럭셔리 케어",
     phone: "0507-1280-3174",
     badge: "24시 상시할인",
@@ -128,7 +187,7 @@ const initialShops = [
   {
     id: 4,
     name: "🌟 베테랑 혼혈스웨디시",
-    location: "서울·경기 전지역",
+    location: "서울·경기·인천 전지역",
     desc: "💯 전문 힐러들의 맞춤형 피로 회복 프로그램 진행 중",
     phone: "0507-1280-3128",
     badge: "신규 제휴할인",
@@ -142,7 +201,7 @@ const initialShops = [
   {
     id: 5,
     name: "👑 한국골든테라피",
-    location: "서울·경기 전지역",
+    location: "서울·경기·인천 전지역",
     desc: "🚀 후불제 안심 이용! 수도권 전지역 평균 25분 내 칼같이 도착",
     phone: "0507-1280-3170",
     badge: "재방문율 99%",
@@ -180,7 +239,7 @@ export default function MainClientUI() {
 
   const handleSearch = () => {
     if (!selectedDistrict) {
-      alert("원하시는 지역(구/시)을 먼저 선택해주세요!");
+      alert("원하시는 지역(구/시/군)을 먼저 선택해주세요!");
       return;
     }
     const targetUrl = selectedDong
@@ -201,14 +260,14 @@ export default function MainClientUI() {
           <a href="/" className="flex items-center gap-3 group">
             <img 
               src="/logo.png" 
-              alt="케어콕 로고" 
+              alt="건마사랑 로고" 
               className="w-10 h-10 rounded-xl object-cover border border-amber-500/40 shadow-[0_0_12px_rgba(245,158,11,0.4)] group-hover:scale-105 transition-transform" 
             />
             <div className="flex flex-col">
               <span className="text-xl font-black tracking-wider bg-gradient-to-r from-amber-300 via-amber-400 to-yellow-500 bg-clip-text text-transparent">
-                케어콕
+                건마사랑
               </span>
-              <span className="text-[10px] text-gray-400 tracking-tighter">SEOUL & GYEONGGI PREMIUM</span>
+              <span className="text-[10px] text-gray-400 tracking-tighter">SEOUL, GYEONGGI & INCHEON HEALING CARE</span>
             </div>
           </a>
           
@@ -218,7 +277,7 @@ export default function MainClientUI() {
               <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
             </span>
             <span className="text-xs px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500/20 to-red-500/20 text-amber-300 border border-amber-500/30 font-bold shadow-inner">
-              🔥 24시 실시간 영업중
+              🔥 24시 실시간 케어 안내
             </span>
           </div>
         </div>
@@ -231,7 +290,7 @@ export default function MainClientUI() {
           <div className="mb-8 overflow-hidden rounded-3xl border border-amber-500/30 shadow-[0_0_40px_rgba(245,158,11,0.15)] relative w-full">
             <img 
               src="/my-banner.png" 
-              alt="케어콕 메인 배너" 
+              alt="건마사랑 메인 배너" 
               className="w-full h-auto object-cover block"
             />
           </div>
@@ -242,10 +301,10 @@ export default function MainClientUI() {
 
             <div className="flex items-center justify-between mb-4">
               <label className="text-xs text-amber-400 font-black uppercase tracking-wider flex items-center gap-1.5">
-                📍 내 주변 맞춤 제휴업체 찾기
+                📍 내 주변 맞춤 방문 테라피 찾기
               </label>
               <span className="text-[11px] text-gray-400 bg-black/40 px-2.5 py-1 rounded-lg border border-white/5">
-                실시간 120개 샵 대기중
+                수도권 150여개 제휴점 안내
               </span>
             </div>
 
@@ -282,14 +341,14 @@ export default function MainClientUI() {
               </div>
 
               <div>
-                <span className="text-[11px] text-gray-400 block mb-1 font-semibold">3단계: 동 선택 (선택사항)</span>
+                <span className="text-[11px] text-gray-400 block mb-1 font-semibold">3단계: 동·읍·면 선택 (선택사항)</span>
                 <select 
                   value={selectedDong} 
                   onChange={(e) => setSelectedDong(e.target.value)} 
                   disabled={!selectedDistrict}
                   className="bg-black/80 text-sm text-white w-full outline-none cursor-pointer font-medium p-3.5 rounded-xl border border-amber-500/30 disabled:opacity-30 transition-colors shadow-inner"
                 >
-                  <option value="" className="bg-[#1e1e1e] text-gray-400">동 전체 보기 (빠른 검색)</option>
+                  <option value="" className="bg-[#1e1e1e] text-gray-400">동 전체 보기 (신속 안내)</option>
                   {currentDongs.map((dong, idx) => (
                     <option key={idx} value={dong} className="bg-[#1e1e1e] text-white">
                       {dong}
@@ -302,7 +361,7 @@ export default function MainClientUI() {
                 onClick={handleSearch}
                 className="w-full bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 hover:from-amber-400 hover:to-yellow-300 text-black font-black py-4 rounded-2xl text-sm transition-all shadow-[0_0_25px_rgba(245,158,11,0.4)] mt-3 cursor-pointer transform active:scale-[0.98]"
               >
-                🚀 내 동네 제휴업체 실시간 확인하기
+                🚀 내 지역 맞춤 케어 코스 실시간 확인
               </button>
             </div>
           </div>
@@ -313,9 +372,9 @@ export default function MainClientUI() {
           <div className="flex justify-between items-end mb-4 px-2">
             <div>
               <h2 className="text-xl md:text-2xl font-black text-white flex items-center gap-2">
-                <span>🏆</span> 실시간 베스트 추천 제휴업체
+                <span>🏆</span> 실시간 프리미엄 홈케어 제휴업체
               </h2>
-              <p className="text-xs text-gray-400 mt-1">고객 만족도 및 재방문율이 가장 검증된 프리미엄 샵입니다.</p>
+              <p className="text-xs text-gray-400 mt-1">고객 만족도 및 재이용률이 검증된 안심 제휴 힐링 프로그램입니다.</p>
             </div>
           </div>
 
@@ -376,7 +435,7 @@ export default function MainClientUI() {
                     <span className="text-base">📞</span> 전화로 즉시예약
                   </a>
                   <a 
-                    href={`sms:${shop.phone}?body=${encodeURIComponent(`${shop.name} 문의드립니다. (케어콕 보고 연락드렸어요)`)}`} 
+                    href={`sms:${shop.phone}?body=${encodeURIComponent(`${shop.name} 문의드립니다. (건마사랑 보고 연락드렸어요)`)}`} 
                     className="flex items-center justify-center gap-2 bg-neutral-900 hover:bg-neutral-800 text-white font-black py-4 rounded-2xl text-xs md:text-sm border border-white/10 transition-all hover:border-amber-500/40 transform active:scale-95 shadow-md"
                   >
                     <span className="text-base">💬</span> 간편 문자상담
@@ -392,8 +451,8 @@ export default function MainClientUI() {
 
       <footer className="bg-[#030303] border-t border-white/10 py-10 text-center text-gray-500 text-xs mt-auto">
         <div className="max-w-4xl mx-auto px-4 space-y-3">
-          <p className="text-gray-400 font-bold">케어콕은 건전하고 안전한 제휴 마사지 정보 플랫폼입니다.</p>
-          <p className="text-[11px] text-gray-600">COPYRIGHT &copy; 케어콕 ALL RIGHTS RESERVED.</p>
+          <p className="text-gray-400 font-bold">건마사랑은 건전하고 쾌적한 방문 힐링 및 홈케어 테라피 정보 안내 플랫폼입니다.</p>
+          <p className="text-[11px] text-gray-600">COPYRIGHT &copy; 건마사랑 (geonmasarang.netlify.app) ALL RIGHTS RESERVED.</p>
         </div>
       </footer>
     </div>
