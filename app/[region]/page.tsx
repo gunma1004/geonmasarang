@@ -1,5 +1,5 @@
 // app/[region]/page.tsx
-import { regionData } from "./data/regions"; // 👈 app/data/regions 경로 연결
+import { regionData } from "../data/regions";
 import Link from "next/link";
 import type { Metadata } from "next";
 
