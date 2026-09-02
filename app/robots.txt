@@ -1,38 +1,4 @@
-import { MetadataRoute } from 'next';
+User-agent: *
+Allow: /
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://geonmasarang.netlify.app';
-
-  return [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 1.0,
-    },
-    // 서울 주요 지역
-    { url: `${baseUrl}/seoul/gangnam`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/seoul/seocho`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/seoul/mapo`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/seoul/songpa`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/seoul/yongsan`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/seoul/jongno`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/seoul/yeongdeungpo`, lastModified: new Date(), priority: 0.8 },
-
-    // 경기 주요 지역
-    { url: `${baseUrl}/gyeonggi/seongnam_bundang`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/gyeonggi/suwon_yeongtong`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/gyeonggi/goyang_ilsandong`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/gyeonggi/yongin_suji`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/gyeonggi/anyang_dongan`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/gyeonggi/hanam`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/gyeonggi/hwaseong`, lastModified: new Date(), priority: 0.8 },
-
-    // 인천 주요 지역
-    { url: `${baseUrl}/incheon/bupyeong`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/incheon/namdong`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/incheon/yeonsu`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/incheon/seogu`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/incheon/michuhol`, lastModified: new Date(), priority: 0.8 },
-  ];
-}
+Sitemap: https://geonmasarang.netlify.app/sitemap.xml
