@@ -1,16 +1,16 @@
-// app/page.tsx
+// 📍 app/page.tsx
 import type { Metadata } from "next";
 import MainClientUI from "./MainClientUI";
 
 export const metadata: Metadata = {
-  title: "서울 경기 인천 출장 힐링 마사지 및 홈케어 안내 - 건마사랑",
-  description: "서울, 경기, 인천 전지역 신속 방문 출장 힐링 마사지 및 출장 홈타이 마사지! 24시 안심 홈케어 제휴 정보.",
+  title: "서울 경기 인천 출장 힐링 마사지 제휴 안내 - 건마사랑",
+  description: "서울, 경기, 인천 신속 방문 출장 힐링 마사지 및 출장 홈타이 마사지 제휴 정보 안내.",
   alternates: {
     canonical: "https://geonmasarang.netlify.app",
   },
   openGraph: {
-    title: "서울 경기 인천 출장 힐링 마사지 및 홈케어 안내 - 건마사랑",
-    description: "서울, 경기, 인천 전지역 신속 방문 출장 힐링 마사지 및 출장 홈타이 마사지! 24시 안심 홈케어 제휴 정보.",
+    title: "서울 경기 인천 출장 힐링 마사지 제휴 안내 - 건마사랑",
+    description: "서울, 경기, 인천 신속 방문 출장 힐링 마사지 및 출장 홈타이 마사지 제휴 정보 안내.",
     type: "website",
     siteName: "건마사랑",
     url: "https://geonmasarang.netlify.app",
@@ -22,8 +22,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "서울 경기 인천 출장 힐링 마사지 및 홈케어 안내 - 건마사랑",
-    description: "서울, 경기, 인천 전지역 신속 방문 출장 힐링 마사지 및 출장 홈타이 마사지! 24시 안심 홈케어 제휴 정보.",
+    title: "서울 경기 인천 출장 힐링 마사지 제휴 안내 - 건마사랑",
+    description: "서울, 경기, 인천 신속 방문 출장 힐링 마사지 및 출장 홈타이 마사지 제휴 정보 안내.",
   },
 };
 
